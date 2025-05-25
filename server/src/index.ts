@@ -3,8 +3,19 @@ import cors from 'cors';
 
 const app = express();
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://your-app-name.netlify.app'  // replace with real Netlify URL
+];
+
 app.use(cors({
-  origin: 'http://localhost:5173'  // nur die URL deiner React-App erlauben
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
 }));
 
 app.get('/api/hello', (_req, res) => {
@@ -12,6 +23,8 @@ app.get('/api/hello', (_req, res) => {
   res.json({ message: 'Hello from Express minimal server!' });
 });
 
-app.listen(8000, () => {
-  console.log('Server läuft auf http://localhost:8000');
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => {
+  console.log(`Server läuft auf http://localhost:${PORT}`);
 });
