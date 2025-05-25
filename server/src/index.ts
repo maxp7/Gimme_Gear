@@ -5,7 +5,7 @@ const app = express();
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://your-app-name.netlify.app'
+  'https://gimmegear.netlify.app'
 ];
 
 app.use(cors({
