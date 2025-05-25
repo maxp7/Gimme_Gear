@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-
+import pool from './db';  
 const app = express();
 
 const allowedOrigins = [
@@ -18,9 +18,14 @@ app.use(cors({
   }
 }));
 
-app.get('/api/hello', (_req: Request, res: Response) => {
-  console.log('Route /api/hello wurde aufgerufen');
-  res.json({ message: 'Hello from Express minimal server!' });
+app.get('/api/hello', async (_req, res) => {
+  try {
+    const result = await pool.query('SELECT NOW()');
+    res.json({ message: `DB time is ${result.rows[0].now}` });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Database error' });
+  }
 });
 
 const PORT = process.env.PORT || 8000;
