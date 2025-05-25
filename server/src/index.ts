@@ -22,11 +22,18 @@ app.get('/api/hello', async (_req, res) => {
   try {
     const result = await pool.query('SELECT NOW()');
     res.json({ message: `DB time is ${result.rows[0].now}` });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error(error);
-    res.status(500).json({ error: 'Database error' });
+
+    // Narrow error type for safer handling:
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: 'Unknown error' });
+    }
   }
 });
+
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
