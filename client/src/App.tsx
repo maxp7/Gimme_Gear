@@ -1,24 +1,17 @@
-import { useEffect, useState } from 'react';
+// App.tsx
 import './App.css';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+import { Routes, Route } from "react-router-dom";
+import HomePage from './components/HomePage.tsx';
+import CategoryPage from './components/CategoriePage.tsx';
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [msg, setMsg] = useState('');
-
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/api/hello`)
-      .then(res => res.json())
-      .then(data => setMsg(data.message))
-      .catch(err => console.error('API fetch error:', err));
-  }, []);
-
   return (
     <>
-      <h1>Vite + React</h1>
-      <p>API message: {msg}</p>
-      <button onClick={() => setCount(count + 1)}>count is {count}</button>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/:name" element={<CategoryPage />} />
+    </Routes>
     </>
   );
 }

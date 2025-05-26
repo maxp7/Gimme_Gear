@@ -10,13 +10,21 @@ app.use(cors({
 
 app.get('/api/hello', async (_req, res) => {
   try {
-    const result = await pool.query('SELECT NOW()');
-    res.json({ message: `DB time is ${result.rows[0].now}` });
-  } catch (error) {
-    console.error('DB Error:', error);
-    res.status(500).json({ error: 'Database error' });
+    const usersResult = await pool.query('SELECT * FROM users');
+    const devicesResult = await pool.query('SELECT * FROM devices');
+    const reservationsResult = await pool.query('SELECT * FROM reservations');
+
+    res.json({
+      users: usersResult.rows,
+      devices: devicesResult.rows,
+      reservations: reservationsResult.rows,
+    });
+  } catch (err) {
+    console.error('Query error:', err);
+    res.status(500).json({ error: 'Failed to fetch data' });
   }
 });
+
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
