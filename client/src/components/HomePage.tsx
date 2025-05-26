@@ -7,12 +7,12 @@ export default function HomePage() {
       <div className="w-[700px] grid grid-cols-2 grid-rows-2 gap-4">
         <Categorie
           imgSrc="/laptop.jpg"
-          altText="Laptop"
+          altText="Laptops"
           categoryName="Laptops"
         />
         <Categorie
-          imgSrc="/laptop.jpg"
-          altText="Laptop"
+          imgSrc="/vr.jpg"
+          altText="VR Headsets"
           categoryName="VR Headsets"
         />
 
