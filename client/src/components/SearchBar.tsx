@@ -20,7 +20,7 @@ export default function SearchBar({ setResults }: SearchBarProps) {
         setResults([]);
         return;
         }
-    fetch("https://gimmegear.netlify.app/dbui")
+    fetch("https://gimme-gear.onrender.com/dbui")
       .then((response) => response.json())
       .then((json) => {
         const results = json.devices.filter((device: Device) =>

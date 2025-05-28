@@ -14,7 +14,7 @@ type User = {
 };
 
 type Device = {
-  deviceid: number;
+  deviceid: string;
   devicename: string;
   devicedescription: string;
   status: string;
