@@ -6,6 +6,7 @@ export default function HomePage() {
   return (
     <>
   <SearchBarContainer/>
+  <SearchBarContainer/>
       <div className="flex items-center justify-center min-h-screen">
   <div className="w-[700px] grid grid-cols-2 grid-rows-2 gap-4">
     <Categorie
