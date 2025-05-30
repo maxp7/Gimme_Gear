@@ -14,10 +14,13 @@ type SearchResultProps = {
 export default function SearchResult({ result }: SearchResultProps) {
     const navigate = useNavigate();
 
+    const handleClick = () => {
+    navigate("/product", { state: { result } }); 
+  };
   return (
     <div
       className="p-2 border-b cursor-pointer hover:bg-gray-100"
-      onClick={() => navigate(`/`)}
+      onClick={handleClick}
     >
       <div className="font-bold">{result.devicename} - {result.status}</div>
     </div>
