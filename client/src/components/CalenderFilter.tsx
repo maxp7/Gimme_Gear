@@ -1,11 +1,7 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
-type CalenderFilterProps = {
-  imgSrc: string;
-  altText?: string;
-  categoryName: string;
-};
+
 
 export default function CalenderFilter() {
 const [startDate, setStartDate] = useState<Date | null>(null);
