@@ -132,9 +132,9 @@ if (!res.ok) {
         />
         <select name="status" value={formData.status} onChange={handleChange} required>
           <option value="">Status</option>
-          <option value="online">Available</option>
-          <option value="offline">Reserved</option>
-          <option value="maintenance">Rented out</option>
+          <option value="Available">Available</option>
+          <option value="Reserved">Reserved</option>
+          <option value="Rented out">Rented out</option>
         </select>
         <input
           type="text"

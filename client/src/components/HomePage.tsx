@@ -20,8 +20,8 @@ export default function HomePage() {
     />
      <Categorie
       imgSrc="/equipment.svg"
-      altText="equipment"
-      categoryName="equipment"
+      altText="Equipment"
+      categoryName="Equipment"
     />
      <Categorie
       imgSrc="/audio.svg"

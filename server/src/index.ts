@@ -6,6 +6,8 @@ const app = express();
 app.use(cors({ origin: ['http://localhost:5173', 'https://gimmegear.netlify.app'] }));
 app.use(express.json()); 
 
+
+
 app.get('/dbui', async (_req, res) => {
   try {
     const devicesResult = await pool.query('SELECT * FROM devices');
@@ -48,6 +50,37 @@ app.delete('/dbui/:deviceid', async (req, res):Promise<any> => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to delete device' });
+  }
+});
+
+app.get('/:name', async (req, res):Promise<any> => {
+  const rawName = req.params.name;
+  const name = decodeURIComponent(rawName);
+
+
+  // Map category names to deviceid prefixes
+  const prefixMap: Record<string, string> = {
+  "Laptops": 'lp',
+  'VR Headsets': 'vr',
+  "Equipment": 'eq',
+  'Audio & Lighting': 'al',
+};
+
+  const prefix = prefixMap[name];
+
+  if (!prefix) {
+    return res.status(400).json({ error: 'Invalid category' });
+  }
+
+  try {
+    const result = await pool.query(
+  'SELECT * FROM devices WHERE deviceid LIKE $1 AND status LIKE $2',
+  [`${prefix}%`, 'Available']
+);
+    res.json({ devices: result.rows });
+  } catch (err) {
+    console.error('Query error:', err);
+    res.status(500).json({ error: 'Failed to fetch devices' });
   }
 });
 
