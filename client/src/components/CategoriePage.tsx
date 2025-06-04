@@ -12,11 +12,9 @@ type Device = {
   status: string;
   comments?: string;
 };
-type ResultProps = {
-  result: Device;
-};
 
-export default function CategoryPage({result}:ResultProps) {
+
+export default function CategoryPage() {
   const { name } = useParams<{ name: string }>();
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(false);
