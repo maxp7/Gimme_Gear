@@ -6,6 +6,7 @@ import HomePage from './components/HomePage.tsx';
 import CategoryPage from './components/CategoriePage.tsx';
 import DBUI from './components/DBUI.tsx';
 import ProductPage from './components/ProductPage.tsx';
+import ReservationsUI from './components/ReservationsUI.tsx';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/product" element={<ProductPage />} />
       <Route path="/:name" element={<CategoryPage />} />
       <Route path="/dbui" element={<DBUI />} />
+      <Route path="/reservations" element={<ReservationsUI />} />
     </Routes>
     </>
   );

@@ -1,7 +1,11 @@
 import dotenv from 'dotenv';
 import path from 'path';
 dotenv.config({ path: path.resolve(__dirname, './.env') });
-import { Pool } from 'pg';
+
+import { Pool, types } from 'pg';
+
+// 👇 Add this line: override the DATE parser (OID 1082)
+types.setTypeParser(1082, (val) => val); // returns the raw 'YYYY-MM-DD' string
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) {

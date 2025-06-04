@@ -1,29 +1,36 @@
+// CalenderFilter.tsx
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useState } from "react";
 
+type Props = {
+  startDate: Date | null;
+  endDate: Date | null;
+  onStartDateChange: (date: Date | null) => void;
+  onEndDateChange: (date: Date | null) => void;
+};
 
-export default function CalenderFilter() {
-const [startDate, setStartDate] = useState<Date | null>(null);
-const [endDate, setEndDate] = useState<Date | null>(null);
-console.log(startDate, endDate);
+export default function CalenderFilter({
+  startDate,
+  endDate,
+  onStartDateChange,
+  onEndDateChange,
+}: Props) {
   return (
-    
-    <div >
+    <div className="flex gap-4">
       <DatePicker
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
-      placeholderText="Select start date"
-      dateFormat="yyyy-MM-dd"
-      className="border p-2 rounded"
-    />
-    <DatePicker
-      selected={endDate}
-      onChange={(date: Date | null) => setEndDate(date)}
-      placeholderText="Select end date"
-      dateFormat="yyyy-MM-dd"
-      className="border p-2 rounded"
-    />
+        selected={startDate}
+        onChange={onStartDateChange}
+        placeholderText="Select start date"
+        dateFormat="yyyy-MM-dd"
+        className="border p-2 rounded"
+      />
+      <DatePicker
+        selected={endDate}
+        onChange={onEndDateChange}
+        placeholderText="Select end date"
+        dateFormat="yyyy-MM-dd"
+        className="border p-2 rounded"
+      />
     </div>
   );
 }
