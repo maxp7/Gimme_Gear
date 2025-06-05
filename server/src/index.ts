@@ -18,6 +18,22 @@ app.get('/reservations', async (_req, res) => {
     res.status(500).json({ error: 'Failed to fetch reservations' });
   }
 });
+app.post('/addUsers', async (req, res) => {
+  const {firstname, secondname, matrikelnumber, email} = req.body;
+
+  try {
+const result = await pool.query(
+  'INSERT INTO users (firstname, secondname, matrikelnumber, email) VALUES ($1, $2, $3, $4) RETURNING *',
+  [firstname, secondname, matrikelnumber, email]
+);
+
+    console.log('Inserted users:', result.rows[0]); 
+    res.status(201).json({ message: 'Device added', user: result.rows[0] });
+  } catch (err) {
+    console.error('Insert error:', err);
+    res.status(500).json({ error: 'Failed to add device' });
+  }
+});
 
 app.post('/reservations', async (req, res): Promise<any> => {
   const {

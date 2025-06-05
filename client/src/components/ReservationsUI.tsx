@@ -4,7 +4,7 @@ import SearchBarContainer from './SearchBarContainer';
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 type Reservation = {
-  reservationnumber: string; // uuid string from backend
+  reservationnumber: string; 
   matrikelnumber: number;
   startdate: string;
   enddate: string;
