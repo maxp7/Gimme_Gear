@@ -1,6 +1,8 @@
+/*
 import express from 'express';
 import cors from 'cors';
 import pool from './db'; // PostgreSQL pool
+import nodemailer from 'nodemailer';
 
 const app = express();
 app.use(cors({ origin: ['http://localhost:5173', 'https://gimmegear.netlify.app'] }));
@@ -89,8 +91,6 @@ app.post('/reservations', async (req, res): Promise<any> => {
       });
     }}
     
-
-    // 4️⃣ Insert the reservation row (status = 'Reserved')
     const reservationResult = await client.query(
       `INSERT INTO reservations
          (matrikelnumber, startdate, enddate, status, deviceid)
@@ -100,6 +100,34 @@ app.post('/reservations', async (req, res): Promise<any> => {
     );
 
     await client.query('COMMIT');
+const admin = process.env.ADMIN
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: 'gimmegear.mailagent@gmail.com',
+    pass: 'xapuyerbkukazypb', // NICHT dein normales Gmail-Passwort!
+  },
+});
+// Send confirmation email
+const mailOptions = {
+  from: '"GimmeGear" <gimmegear.mailagent@gmail.com>',
+  to: [email,admin],
+  subject: 'Reservierungsbestätigung',
+  text: `Hallo ${firstname},
+
+deine Reservierung für das Gerät mit der ID ${deviceid} vom ${startdate} bis ${enddate} wurde erfolgreich erstellt.
+
+Viele Grüße,
+Dein GimmeGear-Team
+  `,
+};
+
+try {
+  await transporter.sendMail(mailOptions);
+  console.log('Bestätigungs-E-Mail gesendet an:', email);
+} catch (mailErr) {
+  console.error('Fehler beim Senden der Bestätigungs-E-Mail:', mailErr);
+}
 
     res.status(201).json({
       message: 'Reservation created',
@@ -241,3 +269,4 @@ const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+*/
