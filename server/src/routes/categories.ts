@@ -1,4 +1,3 @@
-// routes/categories.ts
 import { Router } from 'express';
 import pool from '../db';
 

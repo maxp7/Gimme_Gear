@@ -79,7 +79,6 @@ const addToCart = (device: Device, startDate?: Date | null, endDate?: Date | nul
     });
     localStorage.setItem("deviceCart", JSON.stringify(currentCart));
 
-    // Dispatch a custom event that cart changed
     window.dispatchEvent(new Event("cartUpdated"));
   }
 };
