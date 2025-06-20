@@ -28,8 +28,8 @@ export default function ReservationsUI() {
     email: '',
   });
   const navigate = useNavigate();
+  const token = localStorage.getItem('authToken'); 
   useEffect(() => {
-    const token = localStorage.getItem('authToken');  // Make sure key matches login
     if (!token) {
      
       navigate('/');
@@ -70,7 +70,9 @@ export default function ReservationsUI() {
 
     fetch(`${API_BASE_URL}/admin`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
       body: JSON.stringify(formData),
     })
       .then(res => res.json())
