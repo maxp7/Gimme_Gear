@@ -68,7 +68,7 @@ export default function ReservationsUI() {
     e.preventDefault();
 
 
-    fetch(`${API_BASE_URL}/reservations`, {
+    fetch(`${API_BASE_URL}/admin`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
@@ -97,7 +97,7 @@ export default function ReservationsUI() {
 
   const handleDelete = async (reservationnumber: string) => {
     try {
-      const res = await fetch(`${API_BASE_URL}/reservations/${reservationnumber}`, {
+      const res = await fetch(`${API_BASE_URL}/admin/${reservationnumber}`, {
         method: 'DELETE',
       });
       const data = await res.json();

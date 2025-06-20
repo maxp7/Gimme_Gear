@@ -98,7 +98,7 @@ export default function Cart() {
     };
 
     try {
-      const res = await fetch(`${API_BASE_URL}/reservations`, {
+      const res = await fetch(`${API_BASE_URL}/admin`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(reservation),
