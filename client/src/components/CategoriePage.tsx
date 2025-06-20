@@ -17,7 +17,7 @@ type Device = {
 type CartItem = {
   deviceid: string;
   devicename: string;
-  startDate?: string;  // ISO string or null
+  startDate?: string;  
   endDate?: string;
 };
 
@@ -27,7 +27,7 @@ export default function CategoryPage() {
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  const validCategories = ['Laptops', 'VR Headsets', 'Equipment', 'Audio & Lighting']; 
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
@@ -35,7 +35,9 @@ export default function CategoryPage() {
 
   useEffect(() => {
     if (!name) return;
-
+    if (!name || !validCategories.includes(name)) {
+    navigate('/')
+  }
     const params = new URLSearchParams();
 
     if (startDate) {

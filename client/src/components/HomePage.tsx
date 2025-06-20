@@ -1,3 +1,4 @@
+import AdminLogin from "./AdminLogin";
 import Cart from "./Cart";
 import Categorie from "./Categorie";
 import SearchBarContainer from "./SearchBarContainer";
@@ -6,6 +7,7 @@ export default function HomePage() {
 
   return (
     <>
+    <AdminLogin />
     <Cart />
   <SearchBarContainer/>
       <div className="flex items-center justify-center min-h-screen">

@@ -16,7 +16,7 @@ router.get('/', async (_req, res):Promise<any>  => {
 
 router.post('/', async (req, res):Promise<any>  => {
   const {
-    firstname, secondname, email, matrikelnumber,
+    firstname, secondname, email, matrikelnumber, devicename,
     deviceid, startdate, enddate
   } = req.body;
 
@@ -77,7 +77,25 @@ router.post('/', async (req, res):Promise<any>  => {
       from: '"GimmeGear" <gimmegear.mailagent@gmail.com>',
       to: [email, admin],
       subject: 'Reservierungsbestätigung',
-      text: `Hallo ${firstname},\n\ndeine Reservierung für das Gerät mit der ID ${deviceid} vom ${startdate} bis ${enddate} wurde erfolgreich erstellt.\n\nViele Grüße,\nDein GimmeGear-Team`,
+      text: `Lieber ${firstname} ${secondname},
+
+  wir freuen uns, Ihnen mitteilen zu können, dass Ihre Buchung erfolgreich war!
+
+  Hier sind die Details Ihrer Reservierung:
+  Gerätename: ${devicename}
+  Startdatum: ${startdate}
+  Enddatum: ${enddate}
+
+  Bitte bewahren Sie diese E-Mail als Bestätigung Ihrer Buchung auf. 
+  Denken Sie daran, das Gerät rechtzeitig zurückzugeben, um eventuelle Gebühren zu vermeiden. 
+
+  Bei Fragen oder weiteren Anliegen stehen wir Ihnen gerne zur Verfügung. 
+
+  Vielen Dank, dass Sie unser Verleihsystem nutzen!
+
+  Mit freundlichen Grüßen,
+  Dein GimmeGear-Team
+`,
     });
 
     res.status(201).json({ message: 'Reservation created', reservation: reservation.rows[0] });

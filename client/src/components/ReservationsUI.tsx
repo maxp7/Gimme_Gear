@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SearchBarContainer from './SearchBarContainer';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
@@ -26,18 +27,32 @@ export default function ReservationsUI() {
     secondname: '',
     email: '',
   });
-
+  const navigate = useNavigate();
   useEffect(() => {
-    fetch(`${API_BASE_URL}/reservations`)
+    const token = localStorage.getItem('authToken');  // Make sure key matches login
+    if (!token) {
+     
+      navigate('/');
+      return;
+    }
+    // You may want to verify the token server-side here too, but for now just fetch:
+    fetch(`${API_BASE_URL}/admin`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then(res => {
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         return res.json();
       })
-      .then(data => {
-        setReservations(data.reservations || []);
-      })
-      .catch(err => console.error('API fetch error:', err));
-  }, []);
+      .then(data => setReservations(data.reservations || []))
+      .catch(err => {
+        console.error('API fetch error:', err);
+        // If unauthorized, redirect to login:
+        if (err.message.includes('401') || err.message.includes('403')) {
+          navigate('/login');
+        }
+      });
+  }, [navigate]);;
+;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -51,7 +66,7 @@ export default function ReservationsUI() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // status is set by backend, omit here
+
 
     fetch(`${API_BASE_URL}/reservations`, {
       method: 'POST',
@@ -66,7 +81,6 @@ export default function ReservationsUI() {
         } else {
           console.error('Failed to add reservation:', data.error);
         }
-        // Reset form (except matrikelnumber maybe)
         setFormData({
           matrikelnumber: 0,
           startdate: '',

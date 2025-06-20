@@ -13,10 +13,10 @@ function App() {
     <>
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/product" element={<ProductPage />} />
+      <Route path="/product/:deviceName" element={<ProductPage />} />
       <Route path="/:name" element={<CategoryPage />} />
       <Route path="/dbui" element={<DBUI />} />
-      <Route path="/reservations" element={<ReservationsUI />} />
+      <Route path="/admin" element={<ReservationsUI />} />
     </Routes>
     </>
   );

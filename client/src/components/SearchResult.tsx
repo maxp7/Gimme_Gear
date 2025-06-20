@@ -15,8 +15,10 @@ export default function SearchResult({ result }: SearchResultProps) {
     const navigate = useNavigate();
 
     const handleClick = () => {
-    navigate("/product", { state: { result } }); 
-  };
+  const encodedName = encodeURIComponent(result.devicename);
+  navigate(`/product/${encodedName}`, { state: { result } });
+};
+
   return (
     <div
       className="p-2 border-b cursor-pointer hover:bg-gray-100"

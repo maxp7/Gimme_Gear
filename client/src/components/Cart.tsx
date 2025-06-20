@@ -19,10 +19,12 @@ type Reservation = {
   startdate: string;
   enddate: string;
   deviceid: string;
+  devicename: string; // 👈 add this
   firstname: string;
   secondname: string;
   email: string;
 };
+
 
 
 export default function Cart() {
@@ -89,6 +91,7 @@ export default function Cart() {
       startdate: item.startDate || '',
       enddate: item.endDate || '',
       deviceid: item.deviceid,
+      devicename: item.devicename,
       firstname: formData.firstname,
       secondname: formData.secondname,
       email: formData.email,
