@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-  
+   const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
   const AdminLogin: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -11,9 +11,10 @@ import { useNavigate } from 'react-router-dom';
     setStatus('Logged out.');
 
   };
+ 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://localhost:8000/login', {
+      const response = await fetch(`${API_BASE_URL}/admin`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
