@@ -36,8 +36,8 @@ export default function ReservationsUI() {
       navigate('/');
       return;
     }
-    // You may want to verify the token server-side here too, but for now just fetch:
-    fetch(`${API_BASE_URL}/admin`, {
+   
+    fetch(`${API_BASE_URL}/admin/reservations`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(res => {
@@ -47,7 +47,6 @@ export default function ReservationsUI() {
       .then(data => setReservations(data.reservations || []))
       .catch(err => {
         console.error('API fetch error:', err);
-        // If unauthorized, redirect to login:
         if (err.message.includes('401') || err.message.includes('403')) {
           navigate('/login');
         }
@@ -99,30 +98,35 @@ export default function ReservationsUI() {
   };
 
   const handleDelete = async (reservationnumber: string) => {
-    try {
-      const res = await fetch(`${API_BASE_URL}/admin/${reservationnumber}`, {
+  try {
+    const res = await fetch(
+      `${API_BASE_URL}/reservations/admin/${reservationnumber}`,
+      {
         method: 'DELETE',
         headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      });
-      const data = await res.json();
-
-      if (!res.ok) {
-        console.error('Delete failed:', data.error);
-        alert(`Failed to delete reservation: ${data.error}`);
-        return;
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
       }
+    );
 
-      setReservations(prev =>
-        prev.filter(r => r.reservationnumber !== reservationnumber)
-      );
-    } catch (err) {
-      console.error('Delete error:', err);
-      alert('Error deleting reservation');
+    if (!res.ok) {
+      const text = await res.text();
+      console.error('Delete failed:', text);
+      alert(`Failed to delete reservation: ${text}`);
+      return;
     }
-  };
+
+    const data = await res.json();
+
+    setReservations(prev =>
+      prev.filter(r => r.reservationnumber !== reservationnumber)
+    );
+  } catch (err) {
+    console.error('Delete error:', err);
+  }
+};
+
 
   return (
   <div>

@@ -98,7 +98,7 @@ export default function Cart() {
     };
 
     try {
-      const res = await fetch(`${API_BASE_URL}/admin`, {
+      const res = await fetch(`${API_BASE_URL}/reservations`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(reservation),
@@ -150,7 +150,7 @@ export default function Cart() {
                 </div>
                 <button
                   onClick={() => deleteFromCart(deviceid)}
-                  className="ml-4 px-2 py-1 bg-gray-300 rounded hover:bg-gray-400 text-sm"
+                  className="ml-4 px-2 py-1 bg-gray-900 rounded hover:bg-gray-400 text-sm"
                 >
                   Delete
                 </button>
@@ -170,7 +170,7 @@ export default function Cart() {
       )}
 
       {showForm && (
-        <form onSubmit={handleSubmit} className="space-y-3 border p-4 rounded bg-gray-50">
+        <form onSubmit={handleSubmit} className="space-y-3 border p-4 rounded bg-black-500">
           <h3 className="text-lg font-semibold mb-2">Reservation Details</h3>
 
           <div>
@@ -227,7 +227,7 @@ export default function Cart() {
 
           <div>
             <h4 className="font-semibold mb-1">Devices to reserve:</h4>
-            <ul className="list-disc list-inside max-h-40 overflow-auto border p-2 rounded bg-white">
+            <ul className="list-disc list-inside max-h-40 overflow-auto border p-2 rounded bg-black-400">
               {cart.map(({ deviceid, devicename, startDate, endDate }) => (
                 <li key={deviceid}>
                   <strong>{devicename}</strong> (ID: {deviceid}){" "}

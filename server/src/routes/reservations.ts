@@ -1,20 +1,11 @@
-// routes/reservations.ts
+// routes/userReservations.ts
 import { Router } from 'express';
 import pool from '../db';
 import nodemailer from 'nodemailer';
 
 const router = Router();
 
-router.get('/', async (_req, res):Promise<any>  => {
-  try {
-    const result = await pool.query('SELECT * FROM reservations');
-    res.json({ reservations: result.rows });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch reservations' });
-  }
-});
-
-router.post('/', async (req, res):Promise<any>  => {
+router.post('/', async (req, res):Promise<any> => {
   const {
     firstname, secondname, email, matrikelnumber, devicename,
     deviceid, startdate, enddate
@@ -45,14 +36,14 @@ router.post('/', async (req, res):Promise<any>  => {
        LIMIT 1`,
       [deviceid, startdate, enddate]
     );
-
-     if(conflict.rowCount){
-      if (conflict.rowCount > 0) {
+if(conflict.rowCount){
+    if (conflict.rowCount > 0) {
       await client.query('ROLLBACK');
       return res.status(409).json({
         error: 'Device is already reserved or rented out for the requested period',
       });
-    }}
+    }
+  }
 
     const reservation = await client.query(
       `INSERT INTO reservations (matrikelnumber, startdate, enddate, status, deviceid)
@@ -63,7 +54,7 @@ router.post('/', async (req, res):Promise<any>  => {
 
     await client.query('COMMIT');
 
-    // Send email
+    // Send email (same as before)...
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
@@ -79,22 +70,22 @@ router.post('/', async (req, res):Promise<any>  => {
       subject: 'Reservierungsbestätigung',
       text: `Lieber ${firstname} ${secondname},
 
-  wir freuen uns, Ihnen mitteilen zu können, dass Ihre Buchung erfolgreich war!
+wir freuen uns, Ihnen mitteilen zu können, dass Ihre Buchung erfolgreich war!
 
-  Hier sind die Details Ihrer Reservierung:
-  Gerätename: ${devicename}
-  Startdatum: ${startdate}
-  Enddatum: ${enddate}
+Hier sind die Details Ihrer Reservierung:
+Gerätename: ${devicename}
+Startdatum: ${startdate}
+Enddatum: ${enddate}
 
-  Bitte bewahren Sie diese E-Mail als Bestätigung Ihrer Buchung auf. 
-  Denken Sie daran, das Gerät rechtzeitig zurückzugeben, um eventuelle Gebühren zu vermeiden. 
+Bitte bewahren Sie diese E-Mail als Bestätigung Ihrer Buchung auf. 
+Denken Sie daran, das Gerät rechtzeitig zurückzugeben, um eventuelle Gebühren zu vermeiden. 
 
-  Bei Fragen oder weiteren Anliegen stehen wir Ihnen gerne zur Verfügung. 
+Bei Fragen oder weiteren Anliegen stehen wir Ihnen gerne zur Verfügung. 
 
-  Vielen Dank, dass Sie unser Verleihsystem nutzen!
+Vielen Dank, dass Sie unser Verleihsystem nutzen!
 
-  Mit freundlichen Grüßen,
-  Dein GimmeGear-Team
+Mit freundlichen Grüßen,
+Dein GimmeGear-Team
 `,
     });
 
@@ -107,8 +98,7 @@ router.post('/', async (req, res):Promise<any>  => {
     client.release();
   }
 });
-
-router.delete('/:reservationnumber', async (req, res):Promise<any>  => {
+router.delete('/admin/:reservationnumber', async (req, res):Promise<any>  => {
   const reservationnumber = Number(req.params.reservationnumber);
   try {
     const result = await pool.query(
