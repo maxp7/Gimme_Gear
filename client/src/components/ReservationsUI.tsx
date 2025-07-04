@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchBarContainer from './SearchBarContainer';
+import AdminCalendar from './AdminCalendar';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
@@ -127,6 +128,7 @@ export default function ReservationsUI() {
   <div>
     <SearchBarContainer />
     <h2>Reservations</h2>
+    <AdminCalendar />
     <ul>
       {reservations.map(r => (
         <li key={r.reservationnumber}>
