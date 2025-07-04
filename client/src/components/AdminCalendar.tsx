@@ -4,6 +4,9 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import CalendarDialog from "./CalendarDialog";
+import type { DateSelectArg } from "@fullcalendar/core";
+
+
 interface Reservation {
   reservationnumber: number;
   startdate: string;
