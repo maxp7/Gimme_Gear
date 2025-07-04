@@ -1,206 +1,211 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import SearchBarContainer from './SearchBarContainer';
-import AdminCalendar from './AdminCalendar';
+import React, { useRef, useState, useEffect } from "react";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-
-type Reservation = {
-  reservationnumber: string; 
+interface Reservation {
+  reservationnumber: string;
   matrikelnumber: number;
   startdate: string;
   enddate: string;
   status: string;
   deviceid: string;
+  devicename: string;
   firstname: string;
   secondname: string;
   email: string;
-};
+}
 
-export default function ReservationsUI() {
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
+const ReservationsUI: React.FC = () => {
+  const calendarRef = useRef<FullCalendar>(null);
   const [reservations, setReservations] = useState<Reservation[]>([]);
-  const [formData, setFormData] = useState<Omit<Reservation, 'reservationnumber' | 'status'>>({
+  const [reservationFormData, setReservationFormData] = useState<
+    Omit<Reservation, "reservationnumber" | "status" | "devicename">
+  >({
     matrikelnumber: 0,
-    startdate: '',
-    enddate: '',
-    deviceid: '',
-    firstname: '',
-    secondname: '',
-    email: '',
+    startdate: "",
+    enddate: "",
+    deviceid: "",
+    firstname: "",
+    secondname: "",
+    email: "",
   });
-  const navigate = useNavigate();
-  const token = localStorage.getItem('authToken'); 
-  useEffect(() => {
-    if (!token) {
-     
-      navigate('/');
-      return;
-    }
-   
+
+  const token = localStorage.getItem("authToken");
+
+  const fetchReservations = () => {
+    if (!token) return;
+
     fetch(`${API_BASE_URL}/admin/reservations`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then(res => {
+      .then((res) => {
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         return res.json();
       })
-      .then(data => setReservations(data.reservations || []))
-      .catch(err => {
-        console.error('API fetch error:', err);
-        if (err.message.includes('401') || err.message.includes('403')) {
-          navigate('/login');
-        }
+      .then((data) => setReservations(data.reservations || []))
+      .catch((err) => {
+        console.error("API fetch error:", err);
       });
-  }, [navigate]);;
-;
+  };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  useEffect(() => {
+    fetchReservations();
+  }, [token]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setReservationFormData((prev) => ({
       ...prev,
-      [name]: name === 'matrikelnumber' ? Number(value) : value,
+      [name]: name === "matrikelnumber" ? parseInt(value) : value,
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleReservationSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-
-    fetch(`${API_BASE_URL}/admin`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+    fetch(`${API_BASE_URL}/reservations`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(reservationFormData),
     })
-      .then(res => res.json())
-      .then(data => {
-        if (data.reservation) {
-          setReservations(prev => [...prev, data.reservation]);
-          
-        } else {
-          console.error('Failed to add reservation:', data.error);
+      .then((res) => {
+        if (!res.ok) {
+          console.error(`Server error: ${res.status}`);
+          return res.text().then((text) => console.error("Error page:", text));
         }
-        setFormData({
-          matrikelnumber: 0,
-          startdate: '',
-          enddate: '',
-          deviceid: '',
-          firstname: '',
-          secondname: '',
-          email: '',
-        });
-        
+        return res.json();
       })
-      .catch(err => console.error('POST error:', err));
+      .then((data) => {
+        if (data?.reservation) {
+          console.log("Reservation added:", data.reservation);
+          fetchReservations();
+        } else if (data?.error) {
+          console.error("Failed to add reservation:", data.error);
+        }
+        setReservationFormData({
+          matrikelnumber: 0,
+          startdate: "",
+          enddate: "",
+          deviceid: "",
+          firstname: "",
+          secondname: "",
+          email: "",
+        });
+      })
+      .catch((err) => console.error("POST error:", err));
   };
 
-  const handleDelete = async (reservationnumber: string) => {
-  try {
-    const res = await fetch(
-      `${API_BASE_URL}/reservations/admin/${reservationnumber}`,
-      {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+  const events = reservations.map((r) => ({
+    id: r.reservationnumber,
+    title: `${r.firstname} ${r.secondname} - ${r.devicename}`,
+    start: r.startdate,
+    end: r.enddate,
+    allDay: true,
+    extendedProps: {
+      firstname: r.firstname,
+      secondname: r.secondname,
+      devicename: r.deviceid,
+      status: r.status,
+      email: r.email,
+    },
+  }));
 
-    if (!res.ok) {
-      const text = await res.text();
-      console.error('Delete failed:', text);
-      alert(`Failed to delete reservation: ${text}`);
-      return;
-    }
-
-    const data = await res.json();
-
-    setReservations(prev =>
-      prev.filter(r => r.reservationnumber !== reservationnumber)
-    );
-  } catch (err) {
-    console.error('Delete error:', err);
-  }
-};
-
+  const renderEventContent = (arg: EventContentArg) => (
+    <div>
+      <strong>{arg.event.title}</strong>
+    </div>
+  );
 
   return (
-  <div>
-    <SearchBarContainer />
-    <h2>Reservations</h2>
-    <AdminCalendar />
-    <ul>
-      {reservations.map(r => (
-        <li key={r.reservationnumber}>
-          #{r.reservationnumber} – {r.firstname} {r.secondname} – Matrikel: {r.matrikelnumber} – Device ID: {r.deviceid} – {r.status} – {r.startdate} to {r.enddate}
-          <button onClick={() => handleDelete(r.reservationnumber)}>Delete</button>
-        </li>
-      ))}
-    </ul>
+    <div>
+      <h2>Admin Calendar</h2>
 
-    <h3>Add New Reservation</h3>
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="firstname"
-        placeholder="First Name"
-        value={formData.firstname}
-        onChange={handleChange}
-        required
+      <FullCalendar
+        ref={calendarRef}
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        initialView="dayGridMonth"
+        selectable={false}
+        editable={false}
+        events={events}
+        eventContent={renderEventContent}
       />
-      <input
-        type="text"
-        name="secondname"
-        placeholder="Last Name"
-        value={formData.secondname}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        value={formData.email}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="number"
-        name="matrikelnumber"
-        placeholder="Matrikel Number"
-        value={formData.matrikelnumber || ''}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="text"
-        name="deviceid"
-        placeholder="Device ID"
-        value={formData.deviceid}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="date"
-        name="startdate"
-        value={formData.startdate}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="date"
-        name="enddate"
-        value={formData.enddate}
-        onChange={handleChange}
-        required
-      />
-      <button type="submit">Add Reservation</button>
-    </form>
-  </div>
-);
 
-}
+      <h3>Add New Reservation</h3>
+
+      <form
+        onSubmit={handleReservationSubmit}
+        style={{
+          display: "grid",
+          gap: "0.5rem",
+          maxWidth: "400px",
+          marginTop: "1rem",
+        }}
+      >
+        <input
+          type="text"
+          name="firstname"
+          placeholder="First Name"
+          value={reservationFormData.firstname}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="secondname"
+          placeholder="Last Name"
+          value={reservationFormData.secondname}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={reservationFormData.email}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="number"
+          name="matrikelnumber"
+          placeholder="Matrikel Number"
+          value={reservationFormData.matrikelnumber || ""}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="deviceid"
+          placeholder="Device ID"
+          value={reservationFormData.deviceid}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="date"
+          name="startdate"
+          value={reservationFormData.startdate}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="date"
+          name="enddate"
+          value={reservationFormData.enddate}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Add Reservation</button>
+      </form>
+    </div>
+  );
+};
+
+export default ReservationsUI;
