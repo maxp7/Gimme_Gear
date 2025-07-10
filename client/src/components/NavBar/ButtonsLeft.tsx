@@ -8,7 +8,6 @@ type ButtonsLeftProps = {
 };
 
 export default function ButtonsLeft({
-  isDropdownVisible,
   setIsDropdownVisible,
 }: ButtonsLeftProps) {
   const navigate = useNavigate();
