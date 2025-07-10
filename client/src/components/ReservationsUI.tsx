@@ -1,10 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import type { EventContentArg } from "@fullcalendar/core";
-
+import React, { useState, useEffect } from "react";
+import AdminCalendar from "./AdminCalendar";
 
 
 interface Reservation {
@@ -23,7 +18,6 @@ interface Reservation {
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const ReservationsUI: React.FC = () => {
-  const calendarRef = useRef<FullCalendar>(null);
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [reservationFormData, setReservationFormData] = useState<
     Omit<Reservation, "reservationnumber" | "status" | "devicename">
@@ -120,28 +114,12 @@ const ReservationsUI: React.FC = () => {
     },
   }));
 
-  const renderEventContent = (arg: EventContentArg) => (
-    <div>
-      <strong>{arg.event.title}</strong>
-    </div>
-  );
 
   return (
     <div>
       <h2>Admin Calendar</h2>
-
-      <FullCalendar
-        ref={calendarRef}
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
-        selectable={false}
-        editable={false}
-        events={events}
-        eventContent={renderEventContent}
-      />
-
+      <AdminCalendar events={events} />
       <h3>Add New Reservation</h3>
-
       <form
         onSubmit={handleReservationSubmit}
         style={{
@@ -206,6 +184,7 @@ const ReservationsUI: React.FC = () => {
           required
         />
         <button type="submit">Add Reservation</button>
+        
       </form>
     </div>
   );

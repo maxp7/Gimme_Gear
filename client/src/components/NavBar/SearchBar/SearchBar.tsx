@@ -36,7 +36,7 @@ export default function SearchBar({ setResults }: SearchBarProps) {
     fetchData(value);
   };
   return (
-    <div className="bg-[white] w-full rounded-[10px] h-[2.5rem] px-[15px] flex">
+    <div className="bg-[white] w-full rounded-[20px] h-[3rem] px-[15px] flex">
       <input
         type="text"
         placeholder="Type to search"

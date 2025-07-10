@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import SearchBarContainer from "./SearchBarContainer";
+import NavBar from "./NavBar/NavBar";
 import CalenderFilter from "./CalenderFilter";
 import { useEffect, useState } from 'react';
 import Cart from "./Cart";
@@ -27,7 +27,7 @@ export default function CategoryPage() {
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const validCategories = ['Laptops', 'VR Headsets', 'Equipment', 'Audio & Lighting']; 
+  const validCategories = ['Laptops', 'VR-Headsets', 'Equipment', 'Audio & Lighting', 'More']; 
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
@@ -90,7 +90,7 @@ const addToCart = (device: Device, startDate?: Date | null, endDate?: Date | nul
   return (
     <div className="p-4">
       <Cart />
-      <SearchBarContainer />
+      <NavBar/>
       <CalenderFilter
         startDate={startDate}
         endDate={endDate}

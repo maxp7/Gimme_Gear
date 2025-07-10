@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState} from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -7,36 +7,36 @@ import CalendarDialog from "./CalendarDialog";
 import type { DateSelectArg } from "@fullcalendar/core";
 
 
-interface Reservation {
-  reservationnumber: number;
+interface EventFormData {
+  matrikelnumber: number;
   startdate: string;
   enddate: string;
-  status: string;
-  comment: string | null;
-  deviceid: number;
-  devicename: string;
-  matrikelnumber: string;
+  deviceid: string;
   firstname: string;
   secondname: string;
   email: string;
 }
-interface EventFormData {
-  title: string;
-  room: string;
-  note: string;
+
+
+interface AdminCalendarProps {
+  events: any[]; // optionally type more strictly
 }
 
-const AdminCalendar: React.FC = () => {
+const AdminCalendar: React.FC<AdminCalendarProps> = ({ events }) => {
   const calendarRef = useRef<FullCalendar>(null);
-  const [events, setEvents] = useState<any[]>([]);
   const [open, setOpen] = useState(false);
   const [selectInfo, setSelectInfo] = useState<DateSelectArg | null>(null);
 
-  const [formData, setFormData] = useState<EventFormData>({
-    title: "",
-    room: "",
-    note: "",
-  });
+ const [formData, setFormData] = useState<EventFormData>({
+  matrikelnumber: 0,
+  startdate: "",
+  enddate: "",
+  deviceid: "",
+  firstname: "",
+  secondname: "",
+  email: "",
+});
+
 
   const handleDateSelect = (info: DateSelectArg) => {
     setSelectInfo(info);
@@ -50,47 +50,31 @@ const AdminCalendar: React.FC = () => {
     calendarApi.unselect();
 
     calendarApi.addEvent({
-      title: formData.title,
-      start: selectInfo.startStr,
-      end: selectInfo.endStr,
-      allDay: selectInfo.allDay,
-      extendedProps: {
-        room: formData.room,
-        note: formData.note,
-      },
-    });
+  title: `${formData.firstname} ${formData.secondname}`,
+  start: formData.startdate,
+  end: formData.enddate,
+  allDay: selectInfo.allDay,
+  extendedProps: {
+    matrikelnumber: formData.matrikelnumber,
+    deviceid: formData.deviceid,
+    email: formData.email,
+  },
+});
 
-    setFormData({ title: "", room: "", note: "" });
-    setOpen(false);
+
+  setFormData({
+  matrikelnumber: 0,
+  startdate: "",
+  enddate: "",
+  deviceid: "",
+  firstname: "",
+  secondname: "",
+  email: "",
+});
+setOpen(false);
+
   };
-useEffect(() => {
-    async function fetchReservations() {
-      try {
-        const response = await fetch('/reservations/admin/reservations');
-        if (!response.ok) throw new Error('Failed to fetch reservations');
-        const data = await response.json();
 
-        // Map reservations to FullCalendar event format
-        const mappedEvents = data.reservations.map((res: Reservation) => ({
-          id: res.reservationnumber.toString(),
-          title: `${res.devicename} - ${res.firstname} ${res.secondname}`,
-          start: res.startdate,
-          end: res.enddate,
-          allDay: false,  // set according to your needs
-          extendedProps: {
-            comment: res.comment,
-            matrikelnumber: res.matrikelnumber,
-            status: res.status,
-          }
-        }));
-
-        setEvents(mappedEvents);
-      } catch (error) {
-        console.error('Error loading reservations:', error);
-      }
-    }
-    fetchReservations();
-  }, []);
   return (
     <div>
       <FullCalendar
@@ -100,7 +84,7 @@ useEffect(() => {
         selectable={true}
         editable={true}
         select={handleDateSelect}
-        events={events} // <-- use fetched events here
+        events={events} 
         eventContent={(arg) => {
           const { comment, matrikelnumber, status } = arg.event.extendedProps;
           return (

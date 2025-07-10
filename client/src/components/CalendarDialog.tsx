@@ -5,19 +5,28 @@ interface CalendarDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   formData: {
-    title: string;
-    room: string;
-    note: string;
+    matrikelnumber: number;
+    startdate: string;
+    enddate: string;
+    deviceid: string;
+    firstname: string;
+    secondname: string;
+    email: string;
   };
   setFormData: React.Dispatch<
     React.SetStateAction<{
-      title: string;
-      room: string;
-      note: string;
+      matrikelnumber: number;
+      startdate: string;
+      enddate: string;
+      deviceid: string;
+      firstname: string;
+      secondname: string;
+      email: string;
     }>
   >;
   onSubmit: () => void;
 }
+
 
 const CalendarDialog: React.FC<CalendarDialogProps> = ({
   open,
@@ -36,38 +45,87 @@ const CalendarDialog: React.FC<CalendarDialogProps> = ({
           <Dialog.Title className="text-center text-lg font-medium mb-4">Create Reservation</Dialog.Title>
 
 
-          <fieldset className="flex gap-5 items-center mb-4">
-            <label className="w-[90px] text-right">Name</label>
-            <input
-              value={formData.title}
-              onChange={(e) =>
-                setFormData({ ...formData, title: e.target.value })
-              }
-               className="flex h-[35px] max-w-[300px] border border-gray-400 rounded-md px-2.5"
-            />
-          </fieldset>
+         <fieldset className="flex gap-5 items-center mb-4">
+  <label className="w-[120px] text-right">Matrikelnummer</label>
+  <input
+    type="number"
+    value={formData.matrikelnumber}
+    onChange={(e) =>
+      setFormData({ ...formData, matrikelnumber: Number(e.target.value) })
+    }
+    className="flex h-[35px] max-w-[300px] border border-gray-400 rounded-md px-2.5"
+  />
+</fieldset>
 
-          <fieldset className="flex gap-5 items-center mb-4">
-            <label className="w-[90px] text-right">Device</label>
-            <input
-              value={formData.room}
-              onChange={(e) =>
-                setFormData({ ...formData, room: e.target.value })
-              }
-               className="flex  h-[35px] max-w-[300px] border border-gray-400 rounded-md px-2.5 "
-            />
-          </fieldset>
+<fieldset className="flex gap-5 items-center mb-4">
+  <label className="w-[120px] text-right">Start Date</label>
+  <input
+    type="date"
+    value={formData.startdate}
+    onChange={(e) =>
+      setFormData({ ...formData, startdate: e.target.value })
+    }
+    className="flex h-[35px] max-w-[300px] border border-gray-400 rounded-md px-2.5"
+  />
+</fieldset>
 
-          <fieldset className="flex gap-5 items-center mb-4">
-            <label className="w-[90px] text-right">Comment</label>
-            <input
-              value={formData.note}
-              onChange={(e) =>
-                setFormData({ ...formData, note: e.target.value })
-              }
-              className="flex h-[35px] max-w-[300px] border border-gray-400 rounded-md px-2.5"
-            />
-          </fieldset>
+<fieldset className="flex gap-5 items-center mb-4">
+  <label className="w-[120px] text-right">End Date</label>
+  <input
+    type="date"
+    value={formData.enddate}
+    onChange={(e) =>
+      setFormData({ ...formData, enddate: e.target.value })
+    }
+    className="flex h-[35px] max-w-[300px] border border-gray-400 rounded-md px-2.5"
+  />
+</fieldset>
+
+<fieldset className="flex gap-5 items-center mb-4">
+  <label className="w-[120px] text-right">Device ID</label>
+  <input
+    value={formData.deviceid}
+    onChange={(e) =>
+      setFormData({ ...formData, deviceid: e.target.value })
+    }
+    className="flex h-[35px] max-w-[300px] border border-gray-400 rounded-md px-2.5"
+  />
+</fieldset>
+
+<fieldset className="flex gap-5 items-center mb-4">
+  <label className="w-[120px] text-right">First Name</label>
+  <input
+    value={formData.firstname}
+    onChange={(e) =>
+      setFormData({ ...formData, firstname: e.target.value })
+    }
+    className="flex h-[35px] max-w-[300px] border border-gray-400 rounded-md px-2.5"
+  />
+</fieldset>
+
+<fieldset className="flex gap-5 items-center mb-4">
+  <label className="w-[120px] text-right">Second Name</label>
+  <input
+    value={formData.secondname}
+    onChange={(e) =>
+      setFormData({ ...formData, secondname: e.target.value })
+    }
+    className="flex h-[35px] max-w-[300px] border border-gray-400 rounded-md px-2.5"
+  />
+</fieldset>
+
+<fieldset className="flex gap-5 items-center mb-4">
+  <label className="w-[120px] text-right">Email</label>
+  <input
+    type="email"
+    value={formData.email}
+    onChange={(e) =>
+      setFormData({ ...formData, email: e.target.value })
+    }
+    className="flex h-[35px] max-w-[300px] border border-gray-400 rounded-md px-2.5"
+  />
+</fieldset>
+
 
           <div className="flex justify-end mt-6 gap-2">
             <Dialog.Close asChild>

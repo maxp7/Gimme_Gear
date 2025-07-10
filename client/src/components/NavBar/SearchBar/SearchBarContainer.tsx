@@ -15,7 +15,8 @@ export default function SearchBarContainer() {
 
 
     return(
-       <div className="p-[5vh] w-[40%] mx-auto flex flex-col items-center min-w-[200px]">
+       <div className="flex h-[3rem] w-[80%]
+  ">
             <SearchBar setResults={setResults} />
             <SearchResultsList results = {results} />
        </div>

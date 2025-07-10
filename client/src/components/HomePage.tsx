@@ -1,15 +1,11 @@
-import AdminLogin from "./AdminLogin";
-import Cart from "./Cart";
 import Categorie from "./Categorie";
-import SearchBarContainer from "./SearchBarContainer";
+import NavBar from "./NavBar/NavBar";
 export default function HomePage() {
 
 
   return (
     <>
-    <AdminLogin />
-    <Cart />
-  <SearchBarContainer/>
+  <NavBar/>
       <div className="flex items-center justify-center min-h-screen">
   <div className="w-[700px] grid grid-cols-2 grid-rows-2 gap-4">
     <Categorie
@@ -19,8 +15,8 @@ export default function HomePage() {
     />
      <Categorie
       imgSrc="/vr.svg"
-      altText="VR Headsets"
-      categoryName="VR Headsets"
+      altText="VR-Headsets"
+      categoryName="VR-Headsets"
     />
      <Categorie
       imgSrc="/equipment.svg"

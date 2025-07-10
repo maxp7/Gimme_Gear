@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
-import SearchBarContainer from "./SearchBarContainer";
+import SearchBarContainer from "./NavBar/SearchBar/SearchBarContainer";
 import CalenderFilter from "./CalenderFilter";
 import Cart from "./Cart";
 type Device = {

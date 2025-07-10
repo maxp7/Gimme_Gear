@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import SearchBarContainer from './SearchBarContainer';
+import SearchBarContainer from "./NavBar/SearchBar/SearchBarContainer";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
