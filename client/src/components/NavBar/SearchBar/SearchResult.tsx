@@ -21,10 +21,10 @@ export default function SearchResult({ result }: SearchResultProps) {
 
   return (
     <div
-      className="p-2 border-b cursor-pointer hover:bg-gray-100"
+      className="py-2 px-4 cursor-pointer text-[white] hover:font-bold"
       onClick={handleClick}
     >
-      <div className="font-bold">{result.devicename} - {result.status}</div>
+      <div>{result.devicename} - {result.status}</div>
     </div>
   );
 }

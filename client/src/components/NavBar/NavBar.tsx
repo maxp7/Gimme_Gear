@@ -19,7 +19,12 @@ export default function NavBar() {
           isDropdownVisible={isDropdownVisible}
           setIsDropdownVisible={setIsDropdownVisible}
         />
-        <SearchBarContainer />
+        <div
+        className=" h-[6rem] w-[80%]
+  "
+        onMouseEnter={hideDropdown}>
+            <SearchBarContainer />
+        </div>
         <ButtonsRight />
       </div>
       <DropDown isVisible={isDropdownVisible} />
