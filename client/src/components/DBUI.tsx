@@ -8,6 +8,8 @@ type Device = {
   devicename: string;
   devicedescription?: string;
   status: string;
+  owner:string;
+  location: string;
   comments?: string;
 };
 
@@ -19,6 +21,8 @@ const [formData, setFormData] = useState<Device>({
   devicedescription: '',
   status: '',
   comments: '',
+  owner: '',
+  location: '',
 });
 
   // Load devices on mount
@@ -34,7 +38,7 @@ const [formData, setFormData] = useState<Device>({
       .catch(err => console.error('API fetch error:', err));
   }, []);
 
-  // Handle input change
+
 const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
   const { name, value } = e.target;
   setFormData(prev => ({
@@ -61,6 +65,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   } else {
     console.error('Failed to add device:', data.error);
   }
+  
   // Clear form anyway if you want
   setFormData({
     deviceid: '',
@@ -68,6 +73,8 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     devicedescription: '',
     status: '',
     comments: '',
+    owner: '',
+  location: '',
   });
 })
 
@@ -99,7 +106,7 @@ if (!res.ok) {
       <ul>
         {devices.map(device => (
           <li key={device.deviceid}>
-            {device.deviceid} -{device.devicename} – {device.status}-{device.devicedescription} – {device.comments}
+            {device.deviceid} -{device.devicename} – {device.status}-{device.devicedescription} – {device.owner} – {device.location} {device.comments}
           </li>
         ))}
       </ul>
@@ -135,6 +142,20 @@ if (!res.ok) {
           <option value="Available">Available</option>
           <option value="Reserved">Maintenance</option>
         </select>
+        <input
+          type="text"
+          name="owner"
+          placeholder="Owner"
+          value={formData.owner}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="location"
+          placeholder="Locatio "
+          value={formData.location}
+          onChange={handleChange}
+        />
         <input
           type="text"
           name="comments"

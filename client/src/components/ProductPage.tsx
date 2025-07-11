@@ -1,8 +1,10 @@
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
-import SearchBarContainer from "./NavBar/SearchBar/SearchBarContainer";
 import CalenderFilter from "./CalenderFilter";
-import Cart from "./Cart";
+import NavBar from "./NavBar/NavBar";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+
 type Device = {
   deviceid: string;
   devicename: string;
@@ -16,8 +18,6 @@ type CartItem = {
   startDate?: string;
   endDate?: string;
 };
-
-
 
 
 export default function ProductPage() {
@@ -44,8 +44,7 @@ export default function ProductPage() {
 };
   return (
     <div>
-        <Cart />
-        <SearchBarContainer/>
+        <NavBar/>
         <CalenderFilter
         startDate={startDate}
         endDate={endDate}
@@ -53,7 +52,19 @@ export default function ProductPage() {
         onEndDateChange={setEndDate}
       />
       <div className="font-bold">
-        <img src={`/${imageName}.jpg`} />
+        <div className=" w-[100vw] flex">
+        <img className="w-[47%] m-8 rounded-[20px]" src={`/${imageName}.jpg`} />
+    <div className="w-[47%] m-4">
+  <FullCalendar
+    plugins={[dayGridPlugin]}
+    initialView="dayGridMonth"
+    height={500}
+    selectable
+    editable
+  />
+</div>
+
+</div>
         <br />     
         {result.devicename} 
         <br />

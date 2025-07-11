@@ -11,7 +11,7 @@ export default function DropDown({ isVisible }: DropDownProps) {
     
     <div
       className={`
-        absolute top-[4rem] h-[3rem] bg-gray-400/25 p-2 left-4 right-4 shadow rounded-[20px] 
+        absolute top-[3.5rem] h-[3rem] bg-gray-400/25 p-2 left-4 right-4 shadow rounded-[20px] 
         transition-all duration-300 ease-out z-50 
         ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"}
       `}

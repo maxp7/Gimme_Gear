@@ -12,13 +12,33 @@ router.get('/', async (_req, res) => {
   }
 });
 
+router.get('/schema', async (_req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT table_name, column_name, data_type, is_nullable
+      FROM information_schema.columns
+      WHERE table_schema = 'public'
+        AND table_name IN ('devices', 'reservations', 'users')
+      ORDER BY table_name, ordinal_position
+    `);
+
+    console.log('Devices table schema:');
+    console.table(result.rows);
+
+    res.json({ schema: result.rows });
+  } catch (err) {
+    console.error('Error fetching schema:', err);
+    res.status(500).json({ error: 'Failed to fetch schema' });
+  }
+});
+
 router.post('/', async (req, res) => {
-  const { deviceid, devicename, devicedescription, status, comments } = req.body;
+  const { deviceid, devicename, devicedescription, status, owner, location, comments } = req.body;
   try {
     const result = await pool.query(
-      `INSERT INTO devices (deviceid, devicename, devicedescription, status, comments)
-       VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-      [deviceid, devicename, devicedescription, status, comments]
+      `INSERT INTO devices (deviceid, devicename, devicedescription, status, owner, location, comments)
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      [deviceid, devicename, devicedescription, status, owner, location, comments]
     );
     res.status(201).json({ message: 'Device added', device: result.rows[0] });
   } catch (err) {
