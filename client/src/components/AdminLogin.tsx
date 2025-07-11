@@ -11,7 +11,6 @@ type AdminLoginProps = {
 const AdminLogin: React.FC<AdminLoginProps> = ({ isLoginVisible, setIsLoginVisible }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [status, setStatus] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const loginRef = useRef<HTMLDivElement>(null);
@@ -36,7 +35,6 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ isLoginVisible, setIsLoginVisib
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
-    setStatus('Logged out.');
 
   };
 
@@ -56,11 +54,9 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ isLoginVisible, setIsLoginVisib
       }
 
       localStorage.setItem('authToken', data.token);
-      setStatus('Login successful!');
       setIsLoginVisible(false);
       navigate('/admin')
     } catch (error: any) {
-      setStatus(error.message);
     }
   };
   
