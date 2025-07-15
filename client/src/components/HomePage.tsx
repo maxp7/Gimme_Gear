@@ -1,37 +1,61 @@
+import { useState } from "react";
 import Categorie from "./Categorie";
 import NavBar from "./NavBar/NavBar";
-export default function HomePage() {
+import Banner from "./Banner/Banner";
 
+export default function HomePage() {
+  const [showContent, setShowContent] = useState(false);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   return (
     <>
-  <NavBar/>
-        <img className="w-[100%]" src="/images/banner.svg" alt="Italian Trulli"></img>
-      <div className="flex items-center justify-center">
-  <div className="w-[100%] pb-4 mx-12 mt-4 grid grid-cols-4 grid-rows-1 gap-12">
+      {/* Styles for animations */}
+      <style>
+        {`
+          @keyframes slideInLeft {
+            0% { transform: translateX(-100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+          }
+          @keyframes slideInRight {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+          }
+          .animate-slide-in-left { animation: slideInLeft 0.8s ease forwards; }
+          .animate-slide-in-right { animation: slideInRight 0.8s ease forwards; }
+        `}
+      </style>
 
-    <Categorie
-      imgSrc="/laptop.svg"
-      altText="Laptops"
-      categoryName="Laptops"
-    />
-     <Categorie
-      imgSrc="/vr.svg"
-      altText="VR-Headsets"
-      categoryName="VR-Headsets"
-    />
-     <Categorie
-      imgSrc="/equipment.svg"
-      altText="Equipment"
-      categoryName="Equipment"
-    />
-     <Categorie
-      imgSrc="/audio.svg"
-      altText="Audio & Lighting"
-      categoryName="Audio & Lighting"
-    />
-  </div>
-</div>
+      {/* Blur overlay */}
+      {isDropdownVisible && (
+        <div className="fixed top-[8.5rem] inset-0 z-40 backdrop-blur-sm bg-black/1 transition-all duration-500"></div>
+      )}
+
+      {/* Fixed NavBar */}
+      {showContent && (
+        <div className="fixed top-0 left-0 right-0 z-50">
+          <div className="animate-slide-in-left">
+            <NavBar onDropdownChange={setIsDropdownVisible} />
+          </div>
+        </div>
+      )}
+
+      {/* Spacer */}
+      <div className="h-[80px]" />
+
+      {/* Banner */}
+      <Banner onComplete={() => setShowContent(true)} />
+
+      {/* Categories */}
+      {showContent && (
+        <div className="flex items-center justify-center animate-slide-in-right">
+          <div className="w-full pb-4 mx-12 mt-4 grid grid-cols-4 gap-12">
+            <Categorie imgSrc="/laptop.svg" altText="Laptops" categoryName="Laptops" />
+            <Categorie imgSrc="/vr.svg" altText="VR-Headsets" categoryName="VR-Headsets" />
+            <Categorie imgSrc="/audio.svg" altText="Audio & Lighting" categoryName="Audio & Lighting" />
+            <Categorie imgSrc="/equipment.svg" altText="Equipment" categoryName="Equipment" />
+          </div>
+        </div>
+      )}
     </>
   );
 }

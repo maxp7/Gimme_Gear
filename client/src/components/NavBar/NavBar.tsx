@@ -6,26 +6,38 @@ import DropDown from "../DropDown/DropDown";
 import AdminLogin from "../AdminLogin";
 import Cart from "../Cart/Cart";
 
-export default function NavBar() {
+type NavBarProps = {
+  onDropdownChange?: (visible: boolean) => void;
+};
+
+
+export default function NavBar({ onDropdownChange }: NavBarProps) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isLoginDropdownVisible, setIsLoginDropdownVisible] = useState(false);
   const [isCartDropdownVisible, setIsCartDropdownVisible] = useState(false);
-  const hideDropdown = () => setIsDropdownVisible(false);
+
+  // Always use this helper to change dropdown
+  const handleDropdown = (visible: boolean) => {
+    setIsDropdownVisible(visible);
+    onDropdownChange?.(visible); // inform parent
+  };
+
+  const hideDropdown = () => handleDropdown(false);
 
   return (
     <div
       className="relative h-[6rem]"
-      onMouseLeave={hideDropdown}
+      onMouseLeave={hideDropdown} // <- already correct
     >
       <div className="flex m-4 gap-8">
         <ButtonsLeft
           isDropdownVisible={isDropdownVisible}
-          setIsDropdownVisible={setIsDropdownVisible}
+          setIsDropdownVisible={handleDropdown} // pass handleDropdown
         />
         <div
-          className=" h-[6rem] w-[80%]
-  "
-          onMouseEnter={hideDropdown}>
+          className="h-[6rem] w-[80%]"
+          onMouseEnter={hideDropdown}
+        >
           <SearchBarContainer />
         </div>
         <ButtonsRight
@@ -35,15 +47,16 @@ export default function NavBar() {
           setIsCartDropdownVisible={setIsCartDropdownVisible}
         />
       </div>
+
       <DropDown isVisible={isDropdownVisible} />
       <AdminLogin
         isLoginVisible={isLoginDropdownVisible}
-        setIsLoginVisible={setIsLoginDropdownVisible} />
+        setIsLoginVisible={setIsLoginDropdownVisible}
+      />
       <Cart
-  isCartVisible={isCartDropdownVisible}
-  setIsCartVisible={setIsCartDropdownVisible}
-/>
-
+        isCartVisible={isCartDropdownVisible}
+        setIsCartVisible={setIsCartDropdownVisible}
+      />
     </div>
   );
 }

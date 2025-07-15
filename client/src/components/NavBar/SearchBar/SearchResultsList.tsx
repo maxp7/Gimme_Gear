@@ -15,7 +15,7 @@ type SearchResultsListProps = {
 export default function SearchResultsList({ results }: SearchResultsListProps) {
   return (
     <div>
-      <div className="my-4 w-[100%] bg-gray-400/25
+      <div className="my-4 w-[100%] bg-[white]
             rounded-[20px]">
         {results.map((device) => (
           <SearchResult key={device.deviceid} result={device} />

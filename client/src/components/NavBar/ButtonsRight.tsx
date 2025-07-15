@@ -19,13 +19,13 @@ export default function ButtonsRight({
   const toggleCartDropdown = () => setIsCartDropdownVisible(!isCartnDropdownVisible);
 
   return (
-    <div className="relative w-[150px] h-[3rem] rounded-[20px] bg-gray-400/25 flex items-center justify-around p-2">
+    <div className="relative w-[150px] h-[3rem] rounded-[20px]  flex items-center justify-around p-2">
       <button
         onClick={toggleLoginDropdown}
         title="Login"
         className="text-2xl"
       >
-        <FiLogIn />
+        <FiLogIn className="text-[black]"/>
       </button>
 
       <button
@@ -33,7 +33,7 @@ export default function ButtonsRight({
         title="Cart"
         className="text-2xl"
       >
-        <FiShoppingCart />
+        <FiShoppingCart className="text-[black]"/>
       </button>
     </div>
   );

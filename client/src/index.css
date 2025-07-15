@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
   font-weight: 400;
+  font-style: normal;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background: radial-gradient(114.38% 50% at 50% 50%, #414F53 1.92%, #272C2D 54.33%);
-
+  color: rgb(255, 255, 255);
+  overflow: hidden;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

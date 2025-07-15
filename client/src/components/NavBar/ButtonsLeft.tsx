@@ -15,12 +15,12 @@ export default function ButtonsLeft({
   const showDropdown = () => setIsDropdownVisible(true);
 
   return (
-    <div className="relative w-[150px] h-[3rem] rounded-[20px] bg-gray-400/25 flex items-center justify-around p-2">
+    <div className="relative w-[150px] h-[3rem] rounded-[20px]  flex items-center justify-around p-2">
       <button onMouseEnter={showDropdown} className="focus:outline-none">
-        <GiHamburgerMenu className="w-6 h-6 text-white" />
+        <GiHamburgerMenu className="w-6 h-6 text-[black]" />
       </button>
       <button onClick={() => navigate("/")} className="focus:outline-none">
-        <FiHome className="w-6 h-6 text-white" />
+        <FiHome className="w-6 h-6 text-[black]" />
       </button>
     </div>
   );

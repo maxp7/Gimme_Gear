@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { FiSearch } from "react-icons/fi";
 type Device = {
   deviceid: string;
   devicename: string;
@@ -37,6 +37,7 @@ export default function SearchBar({ setResults }: SearchBarProps) {
   };
   return (
     <div className="bg-[white] w-full rounded-[20px] h-[3rem] px-[15px] flex">
+      <FiSearch className="text-black text-[24px] h-[3rem] mx-2"/>
       <input
         type="text"
         placeholder="Type to search"
