@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Categorie from "./Categorie";
 import NavBar from "./NavBar/NavBar";
 import Banner from "./Banner/Banner";
@@ -7,9 +7,22 @@ export default function HomePage() {
   const [showContent, setShowContent] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
+  useEffect(() => {
+    const images = [
+      "/laptop.svg",
+      "/vr.svg",
+      "/audio.svg",
+      "/equipment.svg"
+    ];
+    images.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
   return (
     <>
-      {/* Styles for animations */}
+      {/* Animations */}
       <style>
         {`
           @keyframes slideInLeft {
@@ -30,12 +43,10 @@ export default function HomePage() {
         <div className="fixed top-[8.5rem] inset-0 z-40 backdrop-blur-sm bg-black/1 transition-all duration-500"></div>
       )}
 
-      {/* Fixed NavBar */}
+      {/* NavBar */}
       {showContent && (
-        <div className="fixed top-0 left-0 right-0 z-50">
-          <div className="animate-slide-in-left">
-            <NavBar onDropdownChange={setIsDropdownVisible} />
-          </div>
+        <div className="fixed top-0 left-0 right-0 z-50 animate-slide-in-left">
+          <NavBar onDropdownChange={setIsDropdownVisible} />
         </div>
       )}
 
