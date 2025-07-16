@@ -36,7 +36,7 @@ export default function NavBar({ onDropdownChange }: NavBarProps) {
         />
         <div
           className="h-[6rem] w-[80%]"
-          onMouseEnter={hideDropdown}
+          
         >
           <SearchBarContainer />
         </div>

@@ -1,13 +1,20 @@
 import { useState, useEffect } from "react";
 import Categorie from "./Categorie";
 import NavBar from "./NavBar/NavBar";
-import Banner from "./Banner/Banner";
+import Banner from "./Banner/Banner"
+
 
 export default function HomePage() {
   const [showContent, setShowContent] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
+
   useEffect(() => {
+    const alreadyShown = sessionStorage.getItem("showContent");
+    if (alreadyShown === "true") {
+      setShowContent(true);
+    }
+
     const images = [
       "/laptop.svg",
       "/vr.svg",
@@ -19,6 +26,11 @@ export default function HomePage() {
       img.src = src;
     });
   }, []);
+
+  const handleBannerComplete = () => {
+    setShowContent(true);
+    sessionStorage.setItem("showContent", "true");
+  };
 
   return (
     <>
@@ -54,7 +66,7 @@ export default function HomePage() {
       <div className="h-[80px]" />
 
       {/* Banner */}
-      <Banner onComplete={() => setShowContent(true)} />
+      <Banner onComplete={handleBannerComplete} skipAnimation={showContent} />
 
       {/* Categories */}
       {showContent && (
@@ -70,3 +82,4 @@ export default function HomePage() {
     </>
   );
 }
+

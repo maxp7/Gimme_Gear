@@ -2,19 +2,31 @@ import React, { useState, useEffect } from "react";
 
 type BannerProps = {
   onComplete: () => void;
+  skipAnimation?: boolean;
 };
 
-const Banner: React.FC<BannerProps> = ({ onComplete }) => {
-  const [showSecond, setShowSecond] = useState(false);
+
+const Banner: React.FC<BannerProps> = ({ onComplete, skipAnimation = false }) => {
+  const [showSecond, setShowSecond] = useState(skipAnimation);
 
   useEffect(() => {
-    if (showSecond) {
+    if (!skipAnimation && showSecond) {
       const timer = setTimeout(() => {
         onComplete(); // signal parent after second animation finishes
       }, 1000); // matches the second animation duration
       return () => clearTimeout(timer);
     }
-  }, [showSecond, onComplete]);
+  }, [showSecond, onComplete, skipAnimation]);
+
+  if (skipAnimation) {
+    return (
+      <div className="relative overflow-hidden h-[300px] bg-transparent flex items-center justify-center">
+        <span className="text-[8vw] font-large text-[black] text-shadow-lg">
+          Such dir was aus
+        </span>
+      </div>
+    );
+  }
 
   return (
     <div className="relative overflow-hidden h-[300px] bg-transparent flex items-center justify-center">
@@ -65,13 +77,17 @@ const Banner: React.FC<BannerProps> = ({ onComplete }) => {
           className="absolute flex h-[full] bg-transparent animate-scale-in-out"
           onAnimationEnd={() => setShowSecond(true)}
         >
-          <span className="text-[6vw] font-large text-[black] text-shadow-lg">Willkommen bei Gimme Gear!</span>
+          <span className="text-[6vw] font-large text-[black] text-shadow-lg">
+            Willkommen bei Gimme Gear!
+          </span>
         </div>
       )}
 
       {showSecond && (
         <div className="absolute flex h-[full] bg-transparent animate-scale-in-stay">
-          <span className="text-[8vw] font-large text-[black] text-shadow-lg">Such dir was aus</span>
+          <span className="text-[8vw] font-large text-[black] text-shadow-lg">
+            Such dir was aus
+          </span>
         </div>
       )}
     </div>

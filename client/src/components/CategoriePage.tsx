@@ -31,9 +31,9 @@ export default function CategoryPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const validCategories = ['Laptops', 'VR-Headsets', 'Equipment', 'Audio & Lighting', 'More'];
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
-
+const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
+const [startDate, endDate] = dateRange;
+const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -104,67 +104,76 @@ export default function CategoryPage() {
 const getImageUrl = (devicename: string) => {
   const safeName = devicename.replace(/\s+/g, '-').toLowerCase();
   console.log(safeName)
-  return `/images/devices-small/${safeName}.jpg`;
+  return `/images/devices-small/${safeName}.svg`;
   
 };
 
 
 
   return (
-    <div>
-      <NavBar />
-      <CalenderFilter
-        startDate={startDate}
-        endDate={endDate}
-        onStartDateChange={setStartDate}
-        onEndDateChange={setEndDate}
-      />
+    <div className="text-black">
+      <NavBar onDropdownChange={setIsDropdownVisible}/>
+      <div className="mt-6 ml-6"><CalenderFilter
+      dateRange={dateRange}
+      onDateRangeChange={setDateRange}
+      
+/></div>
+      {isDropdownVisible && (
+        <div className="fixed top-[8.5rem] inset-0 z-40 backdrop-blur-sm bg-black/1 transition-all duration-500"></div>
+      )}
 
-      <div className="p-4">
-        <h1 className="text-4xl font-bold mb-4">{name}</h1>
-        {loading && <p>Loading devices...</p>}
-        {error && <p className="text-red-500">{error}</p>}
+<div className="p-4">
+  <h1 className="text-4xl font-bold mb-4">{name}</h1>
+  {loading && <p>Loading devices...</p>}
+  {error && <p className="text-red-500">{error}</p>}
 
-        <ul>
-  {devices.length === 0 && <li>No available devices.</li>}
+  {devices.length === 0 && !loading && <p>No available devices.</p>}
 
-  {devices.map(device => (
-    <li
-      key={device.deviceid}
-      onClick={() => handleClick(device)}
-      className="cursor-pointer p-4 border-b flex justify-between items-center"
-    >
-      <div className="flex items-center gap-4">
-        <img 
-          src={getImageUrl(device.devicename)} 
-          alt={device.devicename} 
-          className="w-24 h-24 object-cover rounded shadow"
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = '/device-images/placeholder.jpg'; 
-          }}
-        />
-        <div>
-          <div className="font-semibold">{device.devicename}</div>
-          {device.devicedescription && (
-            <div className="text-sm text-gray-600">{device.devicedescription}</div>
-          )}
-        </div>
-      </div>
-
-      <button
-        disabled={!startDate || !endDate}
-        onClick={(event) => {
-          event.stopPropagation();
-          addToCart(device, startDate, endDate);
-        }}
-        className={`ml-2 px-2 py-1 rounded text-white ${startDate && endDate ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"}`}
+  <div className="grid grid-cols-1 md:grid-cols-3">
+    {devices.map(device => (
+      <div
+        key={device.deviceid}
+        onClick={() => handleClick(device)}
+        className="cursor-pointer p-4 flex justify-between items-center m-4 hover:scale-105 transition-transform"
       >
-        Add to reservation
-      </button>
-    </li>
-  ))}
-</ul>
+        <div className="flex items-center gap-4">
+          <img 
+            src={getImageUrl(device.devicename)} 
+            alt={device.devicename} 
+            className="w-24 h-24 object-cover rounded shadow"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = '/device-images/placeholder.jpg'; 
+            }}
+          />
+          <div>
+            <div className="font-semibold">{device.devicename}</div>
+            {device.devicedescription && (
+              <div className="text-sm text-gray-600">{device.devicedescription}</div>
+            )}
+            <div>Owner: {device.owner}</div>
+          </div>
+        </div>
+<button
+  disabled={!startDate || !endDate}
+  onClick={(event) => {
+    event.stopPropagation();
+    addToCart(device, startDate, endDate);
+  }}
+  className={`ml-4 px-2 py-1 rounded text-black transition ${
+    startDate && endDate
+      ? "cursor-pointer font-bold hover:underline"
+      : "cursor-not-allowed opacity-50"
+  }`}
+>
+  {startDate && endDate ? "Add to cart" : "Select date"}
+</button>
+
       </div>
+    ))}
+  </div>
+</div>
+
+     
     </div>
   );
 }
