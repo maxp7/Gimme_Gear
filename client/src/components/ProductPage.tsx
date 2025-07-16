@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import React, { useState, useEffect, useRef } from "react";
+import  { useState, useEffect, useRef } from "react";
 import NavBar from "./NavBar/NavBar";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -126,17 +126,6 @@ export default function ProductPage() {
 };
 
 
-const selectedRangeEvent = startDate && endDate
-  ? [{
-      id: "selectedRange",
-      title: "Selected",
-      start: formatDateToLocalISO(startDate),
-      end: addOneDay(formatDateToLocalISO(endDate)), // inclusive
-      backgroundColor: "#1976d2",
-      borderColor: "#1976d2",
-      rendering: "background",
-    }]
-  : [];
   return (
     <div className="overflow-y">
       <NavBar onDropdownChange={setIsDropdownVisible} />
