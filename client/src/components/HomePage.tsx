@@ -33,6 +33,7 @@ export default function HomePage() {
   };
 
   return (
+    <div className="overflow-hidden">
     <>
       {/* Animations */}
       <style>
@@ -80,6 +81,7 @@ export default function HomePage() {
         </div>
       )}
     </>
+    </div>
   );
 }
 
