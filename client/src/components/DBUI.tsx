@@ -7,6 +7,7 @@ type Device = {
   deviceid: string;
   devicename: string;
   devicedescription?: string;
+  full_description: string;
   status: string;
   owner:string;
   location: string;
@@ -19,6 +20,7 @@ const [formData, setFormData] = useState<Device>({
   deviceid: '',               
   devicename: '',
   devicedescription: '',
+  full_description: '',
   status: '',
   comments: '',
   owner: '',
@@ -71,6 +73,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     deviceid: '',
     devicename: '',
     devicedescription: '',
+    full_description: '',
     status: '',
     comments: '',
     owner: '',
@@ -100,7 +103,7 @@ if (!res.ok) {
 };
 
   return (
-    <div>
+    <div className='text-black'>
       <SearchBarContainer />
       <h2>Devices</h2>
       <ul>
@@ -111,7 +114,7 @@ if (!res.ok) {
         ))}
       </ul>
 
-      <h3>Add New Device</h3>
+      <h3 className='text-black'>Add New Device</h3>
       <form onSubmit={handleSubmit}>
         <input
             type="text"
@@ -135,6 +138,13 @@ if (!res.ok) {
           name="devicedescription"
           placeholder="Description"
           value={formData.devicedescription}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="full_description"
+          placeholder="Full description"
+          value={formData.full_description}
           onChange={handleChange}
         />
         <select name="status" value={formData.status} onChange={handleChange} required>
@@ -163,13 +173,13 @@ if (!res.ok) {
           value={formData.comments}
           onChange={handleChange}
         />
-        <button type="submit">Add Device</button>
+        <button type="submit" className='border-1 border-black m-4'>Add Device</button>
       </form>
 <ul>
   {devices.map(device => (
     <li key={device.deviceid}>
       {device.devicename} – {device.status}{' '}
-      <button onClick={() => handleDelete(device.deviceid)}>Delete</button>
+      <button className='border-1 border-black' onClick={() => handleDelete(device.deviceid)}>Delete</button>
     </li>
   ))}
 </ul>

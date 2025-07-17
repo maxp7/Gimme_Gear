@@ -33,12 +33,12 @@ router.get('/schema', async (_req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { deviceid, devicename, devicedescription, status, owner, location, comments } = req.body;
+  const { deviceid, devicename, devicedescription, full_description, status, owner, location, comments } = req.body;
   try {
     const result = await pool.query(
-      `INSERT INTO devices (deviceid, devicename, devicedescription, status, owner, location, comments)
-       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-      [deviceid, devicename, devicedescription, status, owner, location, comments]
+      `INSERT INTO devices (deviceid, devicename, devicedescription, full_description, status, owner, location, comments)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
+      [deviceid, devicename, devicedescription, full_description, status,  owner, location, comments]
     );
     res.status(201).json({ message: 'Device added', device: result.rows[0] });
   } catch (err) {

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Categorie from "./Categorie";
 import NavBar from "./NavBar/NavBar";
 import Banner from "./Banner/Banner"
-
+import Footer from "./Footer";
 
 export default function HomePage() {
   const [showContent, setShowContent] = useState(false);
@@ -79,6 +79,10 @@ export default function HomePage() {
             <Categorie imgSrc="/equipment.svg" altText="Equipment" categoryName="Equipment" />
           </div>
         </div>
+        
+      )}
+      {showContent &&(
+        <Footer/>
       )}
     </>
     </div>

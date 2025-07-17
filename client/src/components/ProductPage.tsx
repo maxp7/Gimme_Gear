@@ -9,6 +9,7 @@ type Device = {
   deviceid: string;
   devicename: string;
   devicedescription: string;
+  full_description: string;
   status: string;
   comments: string;
   owner: string;
@@ -138,10 +139,7 @@ export default function ProductPage() {
               <div className="text-2xl m-4">{result.devicename}</div>
               <br />
               <div className="m-4 max-w-[50ch]">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima quos, voluptatibus,
-                impedit est ad quis recusandae ut necessitatibus rem, quisquam quibusdam neque nihil
-                provident sapiente. Animi quibusdam sunt voluptatem tenetur labore iusto id vero, eum
-                excepturi ullam quam eos mollitia ad magni earum a ipsam. Ipsam vitae et enim mollitia?
+                {result.full_description}
               </div>
               <div className="m-4">Owner: {result.owner}</div>
               <div className="m-4">Device is now by: {result.location}</div>
