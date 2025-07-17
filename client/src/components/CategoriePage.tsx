@@ -142,7 +142,7 @@ const getImageUrl = (devicename: string) => {
             alt={device.devicename} 
             className="w-24 h-24 object-cover rounded shadow"
             onError={(e) => {
-              (e.target as HTMLImageElement).src = '/device-images/placeholder.jpg'; 
+              (e.target as HTMLImageElement).src = '/placeholder.png'; 
             }}
           />
           <div>
