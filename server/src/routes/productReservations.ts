@@ -7,8 +7,6 @@ router.get('/', async (req, res) => {
   const devicenameRaw = req.query.devicename;
   const devicename = typeof devicenameRaw === 'string' ? devicenameRaw : undefined;
 
-  console.log('Received devicename filter:', devicename);
-
   try {
     let sql = `
       SELECT

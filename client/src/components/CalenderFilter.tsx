@@ -1,5 +1,6 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { de } from 'date-fns/locale';
 
 type Props = {
   dateRange: [Date | null, Date | null];
@@ -25,8 +26,9 @@ export default function CalenderFilter({
           }
         }}
         isClearable
-        placeholderText="Select date range"
+        placeholderText=" Datum hinzufügen"
         dateFormat="dd-MM-yy"
+        locale={de}
         className="border rounded w-54 p-4 text-black"
       />
     </div>

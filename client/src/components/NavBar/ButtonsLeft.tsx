@@ -17,10 +17,10 @@ export default function ButtonsLeft({
   return (
     <div className="relative w-[150px] h-[3rem] rounded-[20px]  flex items-center justify-around p-2">
       <button onMouseEnter={showDropdown} className="focus:outline-none">
-        <GiHamburgerMenu className="w-6 h-6 text-[black]" />
+        <GiHamburgerMenu className="w-6 h-6 text-[black] hover:cursor-pointer hover:scale-110" />
       </button>
       <button onClick={() => navigate("/")} className="focus:outline-none">
-        <FiHome className="w-6 h-6 text-[black]" />
+        <FiHome className="w-6 h-6 text-[black] hover:cursor-pointer hover:scale-110" />
       </button>
     </div>
   );

@@ -1,7 +1,7 @@
 import ButtonsLeft from "./ButtonsLeft";
 import ButtonsRight from "./ButtonsRight";
 import SearchBarContainer from "./SearchBar/SearchBarContainer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DropDown from "../DropDown/DropDown";
 import LoginDropDown from "../DropDown/LoginDropDown"
 import Cart from "../Cart/Cart";
@@ -15,6 +15,8 @@ export default function NavBar({ onDropdownChange }: NavBarProps) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isLoginDropdownVisible, setIsLoginDropdownVisible] = useState(false);
   const [isCartDropdownVisible, setIsCartDropdownVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
 
   // Always use this helper to change dropdown
   const handleDropdown = (visible: boolean) => {
@@ -23,7 +25,12 @@ export default function NavBar({ onDropdownChange }: NavBarProps) {
   };
 
   const hideDropdown = () => handleDropdown(false);
-
+  useEffect(() => {
+    if (toastMessage) {
+      const timer = setTimeout(() => setToastMessage(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [toastMessage]);
   return (
     <div
       className="relative h-[6rem]"
@@ -36,7 +43,7 @@ export default function NavBar({ onDropdownChange }: NavBarProps) {
         />
         <div
           className="h-[6rem] w-[80%]"
-          
+
         >
           <SearchBarContainer />
         </div>
@@ -50,15 +57,18 @@ export default function NavBar({ onDropdownChange }: NavBarProps) {
 
       <DropDown isVisible={isDropdownVisible} />
       <LoginDropDown
-  isLoginVisible={isLoginDropdownVisible}
-  isDropdownVisible={isDropdownVisible}
-  setIsLoginVisible={setIsLoginDropdownVisible}
-/>
+        isLoginVisible={isLoginDropdownVisible}
+        isDropdownVisible={isDropdownVisible}
+        setIsLoginVisible={setIsLoginDropdownVisible}
+      />
 
       <Cart
         isCartVisible={isCartDropdownVisible}
         setIsCartVisible={setIsCartDropdownVisible}
+        setToastMessage={setToastMessage}
       />
+      
+      
     </div>
   );
 }

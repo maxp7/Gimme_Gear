@@ -71,19 +71,19 @@ const LoginDropDown: React.FC<LoginDropDownProps> = ({ isLoginVisible, setIsLogi
     >
       <div className='w-[40vw] m-auto'>
       <div className='flex flex-col justify-center items-center'>
-      <h3 className="text-lg  font-semibold mb-2">Login</h3>
+      <h3 className="text-lg  font-semibold mb-2">Anmelden</h3>
 
       <div className="flex w-[60%] flex-col gap-2 mb-4">
         <input
           type="text"
-          placeholder="Login"
+          placeholder="Benutzername"
           value={username}
           onChange={e => setUsername(e.target.value)}
           className="w-full px-3 text-black py-2 border rounded-md text-sm"
         />
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Passwort"
           value={password}
           onChange={e => setPassword(e.target.value)}
           className="w-full px-3 text-black py-2 border rounded-md text-sm"
@@ -93,9 +93,9 @@ const LoginDropDown: React.FC<LoginDropDownProps> = ({ isLoginVisible, setIsLogi
       <div className="flex flex-col">
         <button 
           onClick={handleLogin}
-          className="bg-black text-white w-full py-2 px-3 rounded-md text-sm hover:bg-gray-800"
+          className="bg-black text-white w-full py-2 px-3 rounded-md text-sm hover:bg-gray-800 hover:cursor-pointer"
         >
-          Sign in
+          Einloggen
         </button>
         </div>
       </div>

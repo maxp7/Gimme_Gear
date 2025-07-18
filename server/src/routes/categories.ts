@@ -5,10 +5,9 @@ const router = Router();
 
 const prefixMap: Record<string, string> = {
   'Laptops': 'lp',
-  'VR-Headsets': 'vr',
-  'Equipment': 'eq',
-  'Audio & Lighting': 'al',
-  'More': 'mr'
+  'VR-Brille': 'vr',
+  'Zubehör': 'eq',
+  'Ton & Licht': 'al',
 };
 
 router.get('/:name', async (req, res):Promise<any> => {

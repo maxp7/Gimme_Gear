@@ -30,7 +30,7 @@ export default function CategoryPage() {
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const validCategories = ['Laptops', 'VR-Headsets', 'Equipment', 'Audio & Lighting', 'More'];
+  const validCategories = ['Laptops', 'VR-Brille', 'Zubehör', 'Ton & Licht'];
 const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
 const [startDate, endDate] = dateRange;
 const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -103,7 +103,6 @@ const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
 const getImageUrl = (devicename: string) => {
   const safeName = devicename.replace(/\s+/g, '-').toLowerCase();
-  console.log(safeName)
   return `/images/devices/${safeName}.svg`;
   
 };
@@ -113,7 +112,8 @@ const getImageUrl = (devicename: string) => {
   return (
     <div className="text-black">
       <NavBar onDropdownChange={setIsDropdownVisible}/>
-      <div className="mt-6 ml-6"><CalenderFilter
+      <div className="mt-6 ml-6">
+        <CalenderFilter
       dateRange={dateRange}
       onDateRangeChange={setDateRange}
       
@@ -123,8 +123,8 @@ const getImageUrl = (devicename: string) => {
       )}
 
 <div className="p-4">
-  <h1 className="text-4xl font-bold mb-4">{name}</h1>
-  {loading && <p>Loading devices...</p>}
+  <h1 className="text-4xl font-bold m-4">{name}</h1>
+  {loading && <p className="m-4">Verfügbarkeit wird geprüft...</p>}
   {error && <p className="text-red-500">{error}</p>}
 
   {devices.length === 0 && !loading && <p>No available devices.</p>}
@@ -150,7 +150,7 @@ const getImageUrl = (devicename: string) => {
             {device.devicedescription && (
               <div className="text-sm text-gray-600">{device.devicedescription}</div>
             )}
-            <div>Owner: {device.owner}</div>
+            <div>Besitzer: {device.owner}</div>
           </div>
         </div>
 <button
@@ -165,7 +165,7 @@ const getImageUrl = (devicename: string) => {
       : "cursor-not-allowed opacity-50"
   }`}
 >
-  {startDate && endDate ? "Add to cart" : "Select date"}
+  {startDate && endDate ? "Add to cart" : "Datum auswählen"}
 </button>
 
       </div>

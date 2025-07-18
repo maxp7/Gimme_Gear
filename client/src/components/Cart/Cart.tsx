@@ -1,5 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import ReservationForm from "./ReservationForm";
+import { FiDelete } from "react-icons/fi";
+
 
 type CartItem = {
   deviceid: string;
@@ -13,9 +15,11 @@ type CartItem = {
 type CartProps = {
   isCartVisible: boolean;
   setIsCartVisible: (visible: boolean) => void;
+  setToastMessage: (msg: string | null) => void;
 };
 
-export default function Cart({ isCartVisible, setIsCartVisible }: CartProps) {
+export default function Cart({ isCartVisible, setIsCartVisible, setToastMessage }: CartProps) {
+
   const [cart, setCart] = useState<CartItem[]>([]);
   const [showForm, setShowForm] = useState(false);
 
@@ -48,74 +52,86 @@ export default function Cart({ isCartVisible, setIsCartVisible }: CartProps) {
   }, []);
 
   const clearCart = () => {
-    localStorage.removeItem("deviceCart");
-    setCart([]);
-  };
+  localStorage.removeItem("deviceCart");
+  setCart([]);
+  window.dispatchEvent(new Event("cartUpdated"));
+};
 
-  const deleteFromCart = (deviceid: string) => {
-    const updatedCart = cart.filter(item => item.deviceid !== deviceid);
-    localStorage.setItem("deviceCart", JSON.stringify(updatedCart));
-    setCart(updatedCart);
-  };
+const deleteFromCart = (deviceid: string) => {
+  const updatedCart = cart.filter(item => item.deviceid !== deviceid);
+  localStorage.setItem("deviceCart", JSON.stringify(updatedCart));
+  setCart(updatedCart);
+  window.dispatchEvent(new Event("cartUpdated"));
+};
+
 
   const handleFormSuccess = () => {
     clearCart();
     setShowForm(false);
+    setIsCartVisible(false);
+    setToastMessage("Zum Warenkorb hinzugefügt!");
   };
+
 
   const handleCancel = () => {
     setShowForm(false);
   };
 
-
   return (
     <div
       ref={loginRef}
       className={`
-    absolute flex flex-col p-4 top-[8rem] left-1/2 transform -translate-x-1/2 
-    w-[60%] h-[40rem] bg-gray-600/90 p-2 shadow rounded-[20px] 
-    transition-all duration-300 ease-out z-50
-    ${isCartVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"}
-  `}
+        absolute top-[3rem] right-0 w-[320px]text-black max-h-[80vh] bg-white rounded-lg shadow-lg p-4
+        transition-all duration-300 ease-out z-50
+        flex flex-col
+        ${isCartVisible ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-2 pointer-events-none"}
+      `}
     >
-      <h2 className="text-3xl font-bold m-4">Cart</h2>
+      <h2 className="text-2xl font-semibold text-black mb-3 border-b border-gray-300 pb-2">Warenkorb</h2>
 
       {!showForm && (
-        <div className="flex flex-col flex-grow">
-          <ul className="m-4 list-disc list-inside max-h-100% overflow-auto">
+        <>
+          <ul className="flex flex-col gap-3 overflow-auto flex-grow">
+            {cart.length === 0 && <li className="text-gray-500">Warenkorb ist leer.</li>}
+
             {cart.map(({ deviceid, devicename, startDate, endDate, owner, location }) => {
+              console.log('Cart item:', { deviceid, devicename, owner, location });
+              const imagePath = `/images/devices/${devicename.toLowerCase().replace(/\s+/g, "-")}.svg`;
 
-              const imagePath = `/images/${devicename.toLowerCase().replace(/\s+/g, "")}.jpg`;
               return (
-                <li key={deviceid} className="mb-2 flex justify-between">
-                  <div className="flex space-x-4">
-                    <img
-                      src={imagePath}
-                      alt={devicename}
-                      className="w-26 h-26 object-cover rounded"
-                    />
-                    <div className="flex flex-col">
-                      <strong className="text-xl">{devicename}</strong><br />
-                      {startDate && endDate && (
-                        <span>
-                          <strong>From:</strong>{" "}
-                          <em>{new Date(startDate).toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" })}</em> <br />
-                          <strong>To:</strong>{" "}
-                          <em>{new Date(endDate).toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" })}</em>
+                <li key={deviceid} className="flex items-center justify-between gap-3">
+                  <img
+                    src={imagePath}
+                    alt={devicename}
+                    className="w-14 h-14 rounded object-cover flex-shrink-0"
+                  />
+                  <div className="flex flex-col flex-grow">
+                    <span className="font-semibold text-black text-md">{devicename}</span>
+                    {startDate && endDate && (
 
+                      <span className="text-sm text-gray-600">
+                        <span className="text-sm text-gray-600">
+                          <strong>Besitzer: </strong>{owner} {location && <>
+                            <strong>Ort:</strong>  {location}</>}<br />
                         </span>
-                      )} <br />
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-end">
-                    Owner: {owner} <br />
-                    {location && <>Location: {location}</>}
+                        <strong>Von:{" "}</strong>
+                        <time dateTime={startDate}>
+                          {new Date(startDate).toLocaleDateString(undefined, { day: "2-digit", month: "2-digit", year: "numeric" })}
+                        </time>{" "}
+                        <strong className="ml-1">Bis: {" "}</strong>
+                        <time dateTime={endDate}>
+                          {new Date(endDate).toLocaleDateString(undefined, { day: "2-digit", month: "2-digit", year: "numeric" })}
+                        </time>
+                      </span>
+                    )}
+
                   </div>
                   <button
                     onClick={() => deleteFromCart(deviceid)}
-                    className="ml-4 px-2 h-[32px] py-1 bg-[red]/40 rounded hover:bg-[red]/80 text-sm"
+                    className="text-black hover:scale-110 hover:cursor-pointer text-xl font-semibold px-2 py-1 rounded"
+                    aria-label={`Delete ${devicename} from cart`}
                   >
-                    Delete
+                    <FiDelete />
                   </button>
                 </li>
               );
@@ -125,18 +141,18 @@ export default function Cart({ isCartVisible, setIsCartVisible }: CartProps) {
           {cart.length > 0 && (
             <button
               onClick={() => setShowForm(true)}
-              className="mt-auto mb-4 px-3 py-1 bg-[#068347]/70 text-white rounded-[10px] hover:bg-[#068347]"
+              className="mt-3 bg-black text-white hover:bg-[grey-900] hover:cursor-pointer py-2 rounded-md font-semibold transition-colors"
             >
-              Make Reservation
+              Buchen
             </button>
           )}
-        </div>
+        </>
       )}
 
       {showForm && (
         <ReservationForm cart={cart} onSubmitSuccess={handleFormSuccess} onCancel={handleCancel} />
       )}
-    </div>
 
+    </div>
   );
 }

@@ -40,7 +40,7 @@ export default function SearchBar({ setResults }: SearchBarProps) {
       <FiSearch className="text-black text-[24px] h-[3rem] mx-2"/>
       <input
         type="text"
-        placeholder="Type to search"
+        placeholder="Wonach suchst du?"
         className="bg-transparent h-full w-full border-none text-[1.25rem] text-[black] outline-none"
         value={input}
         onChange={(e) => handleChange(e.target.value)}

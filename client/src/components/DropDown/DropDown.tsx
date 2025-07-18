@@ -21,11 +21,11 @@ export default function DropDown({ isVisible }: DropDownProps) {
 <li className="cursor-pointer text-[black] text-shadow-sm hover:scale-110"
 onClick={() => navigate(`/Laptops`)}>Laptops</li>
 <li className="cursor-pointer text-[black] text-shadow-sm hover:scale-110"
-onClick={() => navigate(`/VR-Headsets`)}>VR-Headsets</li>
+onClick={() => navigate(`/VR-Brille`)}>VR-Brille</li>
 <li className="cursor-pointer text-[black] text-shadow-sm hover:scale-110"
-onClick={() => navigate(`/Audio & Lighting`)}>Audio & Lighting</li>
+onClick={() => navigate(`/Ton & Licht`)}>Ton & Licht</li>
 <li className="cursor-pointer text-[black] text-shadow-sm hover:scale-110"
-onClick={() => navigate(`/Equipment`)}>Equipment</li>
+onClick={() => navigate(`/Zubehör`)}>Zubehör</li>
 
 
 

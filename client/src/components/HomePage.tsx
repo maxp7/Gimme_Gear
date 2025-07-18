@@ -76,9 +76,9 @@ export default function HomePage() {
         <div className="flex items-center justify-center animate-slide-in-right">
           <div className="w-full pb-4 mx-12 mt-4 grid grid-cols-4 gap-12">
             <Categorie imgSrc="/laptop.svg" altText="Laptops" categoryName="Laptops" />
-            <Categorie imgSrc="/vr.svg" altText="VR-Headsets" categoryName="VR-Headsets" />
-            <Categorie imgSrc="/audio.svg" altText="Audio & Lighting" categoryName="Audio & Lighting" />
-            <Categorie imgSrc="/equipment.svg" altText="Equipment" categoryName="Equipment" />
+            <Categorie imgSrc="/vr.svg" altText="VR-Brille" categoryName="VR-Brille" />
+            <Categorie imgSrc="/audio.svg" altText="Ton & Licht" categoryName="Ton & Licht" />
+            <Categorie imgSrc="/equipment.svg" altText="Zubehör" categoryName="Zubehör" />
           </div>
         </div>
         
