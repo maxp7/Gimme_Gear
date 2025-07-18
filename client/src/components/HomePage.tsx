@@ -7,6 +7,8 @@ import Footer from "./Footer";
 export default function HomePage() {
   const [showContent, setShowContent] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [isLoginDropdownVisible, setIsLoginDropdownVisible] = useState(false);
+  
 
 
   useEffect(() => {
@@ -52,7 +54,7 @@ export default function HomePage() {
       </style>
 
       {/* Blur overlay */}
-      {isDropdownVisible && (
+      {isDropdownVisible&& (
         <div className="fixed top-[8.5rem] inset-0 z-40 backdrop-blur-sm bg-black/1 transition-all duration-500"></div>
       )}
 

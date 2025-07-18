@@ -2,20 +2,20 @@ import { FiLogIn } from "react-icons/fi";
 import { FiShoppingCart } from "react-icons/fi";
 
 type ButtonsRightProps = {
-  isLoginDropdownVisible: boolean;
-  setIsLoginDropdownVisible: (visible: boolean) => void;
+  isDropdownVisible: boolean;
+  setIsDropdownVisible: (visible: boolean) => void;
   isCartnDropdownVisible: boolean;
   setIsCartDropdownVisible: (visible: boolean) => void;
 };
 
 export default function ButtonsRight({
-  isLoginDropdownVisible,
-  setIsLoginDropdownVisible,
+  isDropdownVisible,
+  setIsDropdownVisible,
   isCartnDropdownVisible,
   setIsCartDropdownVisible
 }: ButtonsRightProps) {
 
-  const toggleLoginDropdown = () => setIsLoginDropdownVisible(!isLoginDropdownVisible);
+  const toggleLoginDropdown = () => setIsDropdownVisible(!isDropdownVisible);
   const toggleCartDropdown = () => setIsCartDropdownVisible(!isCartnDropdownVisible);
 
   return (

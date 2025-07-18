@@ -5,14 +5,20 @@ const router = Router();
 
 router.post('/', async (req, res) => {
   try {
-    await pool.query(`
-      ALTER TABLE devices
-      ADD COLUMN IF NOT EXISTS full_description TEXT;
+    const result = await pool.query(`
+      SELECT * FROM devices WHERE deviceid = 'lp-356';
     `);
-    res.json({ message: '✅ Column full_description added (if not already present).' });
+
+    // log the whole result
+    console.log(result);
+
+    // log just the rows (what you care about)
+    console.log('Rows:', result.rows);
+
+    res.json({ message: "✅ Query executed", rows: result.rows });
   } catch (error) {
-    console.error('Error altering table:', error);
-    res.status(500).json({ error: '❌ Failed to alter table.' });
+    console.error('Error querying table:', error);
+    res.status(500).json({ error: '❌ Failed to query table.' });
   }
 });
 

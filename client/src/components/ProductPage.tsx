@@ -165,7 +165,7 @@ export default function ProductPage() {
             </button>
           </div>
 
-          <img className="w-[40%] m-8 rounded-[20px]" src={`/${imageName}.svg`} />
+          <img className="w-[40%] m-8 rounded-[20px]" src={`/images/devices/${imageName}.svg`} />
 
           {isDropdownVisible && (
             <div className="fixed top-[8.5rem] inset-0 z-40 backdrop-blur-sm bg-black/10 transition-all duration-500"></div>

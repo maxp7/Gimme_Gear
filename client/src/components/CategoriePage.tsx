@@ -104,7 +104,7 @@ const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 const getImageUrl = (devicename: string) => {
   const safeName = devicename.replace(/\s+/g, '-').toLowerCase();
   console.log(safeName)
-  return `/images/devices-small/${safeName}.svg`;
+  return `/images/devices/${safeName}.svg`;
   
 };
 

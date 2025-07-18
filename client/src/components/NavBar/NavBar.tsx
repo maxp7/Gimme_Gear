@@ -3,7 +3,7 @@ import ButtonsRight from "./ButtonsRight";
 import SearchBarContainer from "./SearchBar/SearchBarContainer";
 import { useState } from "react";
 import DropDown from "../DropDown/DropDown";
-import AdminLogin from "../AdminLogin";
+import LoginDropDown from "../DropDown/LoginDropDown"
 import Cart from "../Cart/Cart";
 
 type NavBarProps = {
@@ -41,18 +41,20 @@ export default function NavBar({ onDropdownChange }: NavBarProps) {
           <SearchBarContainer />
         </div>
         <ButtonsRight
-          isLoginDropdownVisible={isLoginDropdownVisible}
-          setIsLoginDropdownVisible={setIsLoginDropdownVisible}
+          isDropdownVisible={isLoginDropdownVisible}
+          setIsDropdownVisible={setIsLoginDropdownVisible}
           isCartnDropdownVisible={isCartDropdownVisible}
           setIsCartDropdownVisible={setIsCartDropdownVisible}
         />
       </div>
 
       <DropDown isVisible={isDropdownVisible} />
-      <AdminLogin
-        isLoginVisible={isLoginDropdownVisible}
-        setIsLoginVisible={setIsLoginDropdownVisible}
-      />
+      <LoginDropDown
+  isLoginVisible={isLoginDropdownVisible}
+  isDropdownVisible={isDropdownVisible}
+  setIsLoginVisible={setIsLoginDropdownVisible}
+/>
+
       <Cart
         isCartVisible={isCartDropdownVisible}
         setIsCartVisible={setIsCartDropdownVisible}
