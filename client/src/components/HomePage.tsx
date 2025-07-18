@@ -7,7 +7,7 @@ import Footer from "./Footer";
 export default function HomePage() {
   const [showContent, setShowContent] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [isLoginDropdownVisible, setIsLoginDropdownVisible] = useState(false);
+
   
 
 

@@ -23,7 +23,7 @@ export default function NavBar({ onDropdownChange }: NavBarProps) {
     setIsDropdownVisible(visible);
     onDropdownChange?.(visible); // inform parent
   };
-
+  
   const hideDropdown = () => handleDropdown(false);
   useEffect(() => {
     if (toastMessage) {
@@ -34,12 +34,12 @@ export default function NavBar({ onDropdownChange }: NavBarProps) {
   return (
     <div
       className="relative h-[6rem]"
-      onMouseLeave={hideDropdown} // <- already correct
+      onMouseLeave={hideDropdown}
     >
       <div className="flex m-4 gap-8">
         <ButtonsLeft
           isDropdownVisible={isDropdownVisible}
-          setIsDropdownVisible={handleDropdown} // pass handleDropdown
+          setIsDropdownVisible={handleDropdown} 
         />
         <div
           className="h-[6rem] w-[80%]"
@@ -68,7 +68,11 @@ export default function NavBar({ onDropdownChange }: NavBarProps) {
         setToastMessage={setToastMessage}
       />
       
-      
+      {toastMessage && (
+        <div className="fixed bottom-4 right-4 bg-black font-bold text-white px-4 py-2 rounded shadow z-[100] whitespace-pre-line">
+          {toastMessage}
+        </div>
+      )}
     </div>
   );
 }

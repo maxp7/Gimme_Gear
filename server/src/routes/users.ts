@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
 
   try {
     const result = await pool.query(
-      'INSERT INTO users (firstname, secondname, matrikelnumber, email) VALUES ($1, $2, $3, $4) RETURNING *',
+      'INSERT INTO users (firstname, secondname, matrikelnumber, email) VALUES ($1, $2, $3, $4) ON CONFLICT (matrikelnumber) DO NOTHING',
       [firstname, secondname, matrikelnumber, email]
     );
     res.status(201).json({ message: 'User added', user: result.rows[0] });

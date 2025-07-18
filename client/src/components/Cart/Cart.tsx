@@ -69,7 +69,7 @@ const deleteFromCart = (deviceid: string) => {
     clearCart();
     setShowForm(false);
     setIsCartVisible(false);
-    setToastMessage("Zum Warenkorb hinzugefügt!");
+    setToastMessage("Buchung erfolgreich!\nMail checken (auch Spam)!");
   };
 
 

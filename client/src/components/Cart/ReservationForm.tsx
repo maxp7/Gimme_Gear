@@ -113,8 +113,6 @@ export default function ReservationForm({ cart, onSubmitSuccess, onCancel }: Res
           console.error(`Failed for ${item.deviceid}:`, errorData.error);
         }
       }
-
-      console.log("All reservations submitted.");
       onSubmitSuccess();
     } catch (err) {
       console.error("Submission error:", err);
