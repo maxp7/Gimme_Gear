@@ -10,17 +10,19 @@ type Device = {
 
 type SearchResultsListProps = {
   results: Device[];
+  clearResults: () => void;
 };
 
-export default function SearchResultsList({ results }: SearchResultsListProps) {
+export default function SearchResultsList({ results, clearResults }: SearchResultsListProps) {
   return (
-    <div>
-      <div className="my-4 w-[100%] bg-[white]
-            rounded-[20px]">
-        {results.map((device) => (
-          <SearchResult key={device.deviceid} result={device} />
-        ))}
-      </div>
+    <div className="my-4 relative w-full bg-white rounded-2xl z-20">
+      {results.map((device) => (
+        <SearchResult
+          key={device.deviceid}
+          result={device}
+          clearResults={clearResults}
+        />
+      ))}
     </div>
   );
 }

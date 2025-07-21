@@ -112,8 +112,7 @@ const getImageUrl = (devicename: string) => {
   return (
     <div className="text-black">
       <NavBar onDropdownChange={setIsDropdownVisible}/>
-      <div className="mt-6 ml-6">
-        <CalenderFilter
+      <div className="mt-6 ml-6"><CalenderFilter
       dateRange={dateRange}
       onDateRangeChange={setDateRange}
       

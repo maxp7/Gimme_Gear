@@ -35,3 +35,7 @@ body {
   background-color: #e1e1e1 !important;
 }
 
+.react-datepicker-wrapper {
+  z-index: 0 !important;
+  position: static !important;
+}

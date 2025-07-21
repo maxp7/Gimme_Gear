@@ -87,11 +87,11 @@ const deleteFromCart = (deviceid: string) => {
         ${isCartVisible ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-2 pointer-events-none"}
       `}
     >
-      <h2 className="text-2xl font-semibold text-black mb-3 border-b border-gray-300 pb-2">Warenkorb</h2>
+      <h2 className="text-2xl font-semibold text-black mb-3 pb-2">Warenkorb</h2>
 
       {!showForm && (
         <>
-          <ul className="flex flex-col gap-3 overflow-auto flex-grow">
+          <ul className="flex flex-col gap-3 flex-grow">
             {cart.length === 0 && <li className="text-gray-500">Warenkorb ist leer.</li>}
 
             {cart.map(({ deviceid, devicename, startDate, endDate, owner, location }) => {
@@ -128,7 +128,7 @@ const deleteFromCart = (deviceid: string) => {
                   </div>
                   <button
                     onClick={() => deleteFromCart(deviceid)}
-                    className="text-black hover:scale-110 hover:cursor-pointer text-xl font-semibold px-2 py-1 rounded"
+                    className="text-black hover:scale-110 hover:cursor-pointer text-xl font-semibold px-2 py-1"
                     aria-label={`Delete ${devicename} from cart`}
                   >
                     <FiDelete />

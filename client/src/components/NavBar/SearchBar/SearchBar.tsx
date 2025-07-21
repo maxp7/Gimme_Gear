@@ -7,26 +7,25 @@ type Device = {
   status: string;
   comments: string;
 };
-
 type SearchBarProps = {
+  input: string;
+  setInput: (value: string) => void;
   setResults: (devices: Device[]) => void;
 };
 
-export default function SearchBar({ setResults }: SearchBarProps) {
-  const [input, setInput] = useState("");
-
+export default function SearchBar({ input, setInput, setResults }: SearchBarProps) {
   const fetchData = (value: string) => {
     if (!value) {
-        setResults([]);
-        return;
-        }
+      setResults([]);
+      return;
+    }
     fetch("https://gimme-gear.onrender.com/dbui")
       .then((response) => response.json())
       .then((json) => {
         const results = json.devices.filter((device: Device) =>
           device.devicename.toLowerCase().includes(value.toLowerCase())
         );
-        setResults(results); 
+        setResults(results);
       })
       .catch(console.error);
   };
@@ -35,9 +34,9 @@ export default function SearchBar({ setResults }: SearchBarProps) {
     setInput(value);
     fetchData(value);
   };
+
   return (
     <div className="bg-[white] w-full rounded-[20px] h-[3rem] px-[15px] flex">
-      <FiSearch className="text-black text-[24px] h-[3rem] mx-2"/>
       <input
         type="text"
         placeholder="Wonach suchst du?"

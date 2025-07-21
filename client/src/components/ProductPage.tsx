@@ -104,6 +104,7 @@ const [startDate, endDate] = dateRange;
     setToastMessage("Bereits im Warenkorb");
   }
 };
+
 useEffect(() => {
   if (!result?.devicename) return;
 

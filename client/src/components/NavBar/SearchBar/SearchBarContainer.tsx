@@ -12,12 +12,15 @@ type Device = {
 
 export default function SearchBarContainer() {
   const [results, setResults] = useState<Device[]>([]); 
-
-
-    return(
-       <div>
-            <SearchBar setResults={setResults} />
-            <SearchResultsList results = {results} />
-       </div>
-    )
+  const [input, setInput] = useState("");
+    const clearResults = () => {
+    setResults([]);
+    setInput("");
+  };
+  return (
+    <div>
+       <SearchBar input={input} setInput={setInput} setResults={setResults} />
+      <SearchResultsList results={results} clearResults={clearResults} />
+    </div>
+  )
 }
