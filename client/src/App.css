@@ -39,3 +39,28 @@ body {
   z-index: 0 !important;
   position: static !important;
 }
+
+.fc .fc-daygrid-day {
+  height: 10px !important; 
+  min-height: calc(800px / 6) !important;
+  max-height: calc(800px / 6) !important;
+  padding: 2px !important;
+}
+
+.fc .fc-daygrid-day-frame {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+}
+
+[data-radix-dialog-overlay] {
+  z-index: 1; /* or whatever you need */
+}
+
+.fc-event {
+  background-color: #000000 !important; /* green */
+  padding: 2px 5px;
+  border-color: #ffffff !important; /* darker green */
+  color: white !important; /* text color */
+}

@@ -12,8 +12,8 @@ const router = Router();
 
 router.use('/login', loginRoute);
 router.use('/admin', verifyAdminToken);
-router.use('/addUsers', usersRoutes);
-router.use('/dbui', devicesRoutes);
+router.use('/users', usersRoutes);
+router.use('/devices', devicesRoutes);
 router.use('/admin/reservations', adminRoutes);
 router.use('/reservations', reservationsRoutes);
 router.use('/product-reservations', productReservationsRoutes);

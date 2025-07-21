@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { FiSearch } from "react-icons/fi";
 type Device = {
   deviceid: string;
   devicename: string;

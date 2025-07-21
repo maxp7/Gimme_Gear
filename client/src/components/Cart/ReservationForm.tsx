@@ -84,7 +84,7 @@ export default function ReservationForm({ cart, onSubmitSuccess, onCancel }: Res
     };
 
     try {
-      await fetch(`${API_BASE_URL}/addUsers`, {
+      await fetch(`${API_BASE_URL}/users/addUser`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(users),

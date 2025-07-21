@@ -98,21 +98,8 @@ Dein GimmeGear-Team
     client.release();
   }
 });
-router.delete('/admin/:reservationnumber', async (req, res):Promise<any>  => {
-  const reservationnumber = Number(req.params.reservationnumber);
-  try {
-    const result = await pool.query(
-      'DELETE FROM reservations WHERE reservationnumber = $1 RETURNING *',
-      [reservationnumber]
-    );
-    if (result.rowCount === 0) {
-      return res.status(404).json({ error: 'Reservation not found' });
-    }
-    res.json({ message: 'Reservation deleted', reservation: result.rows[0] });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to delete reservation' });
-  }
-});
+
+
 
 
 

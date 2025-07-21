@@ -6,7 +6,7 @@ const router = Router();
 router.post('/', async (req, res) => {
   try {
     const result = await pool.query(`
-      SELECT * FROM devices WHERE deviceid = 'lp-356';
+      SELECT reservationsnumber FROM reservations where reservationsnumber = 62;
     `);
 
     // log the whole result
