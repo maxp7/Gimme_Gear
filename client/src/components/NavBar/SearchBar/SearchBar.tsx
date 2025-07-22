@@ -17,7 +17,7 @@ export default function SearchBar({ input, setInput, setResults }: SearchBarProp
       setResults([]);
       return;
     }
-    fetch("https://gimme-gear.onrender.com/dbui")
+    fetch("https://gimme-gear.onrender.com/devices/getDevices")
       .then((response) => response.json())
       .then((json) => {
         const results = json.devices.filter((device: Device) =>
