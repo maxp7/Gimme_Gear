@@ -83,11 +83,9 @@ const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
     const index = currentCart.findIndex(item => item.deviceid === device.deviceid);
     if (index !== -1) {
-      // Update existing item dates
       currentCart[index].startDate = startDate.toISOString().split("T")[0];
       currentCart[index].endDate = endDate.toISOString().split("T")[0];
     } else {
-      // Add new item
       currentCart.push({
         deviceid: device.deviceid,
         devicename: device.devicename,

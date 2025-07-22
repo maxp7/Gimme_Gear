@@ -37,7 +37,6 @@ export default function HomePage() {
   return (
     <div className="overflow-hidden">
     <>
-      {/* Animations */}
       <style>
         {`
           @keyframes slideInLeft {
@@ -53,28 +52,24 @@ export default function HomePage() {
         `}
       </style>
 
-      {/* Blur overlay */}
       {isDropdownVisible&& (
         <div className="fixed top-[8.5rem] inset-0 z-40 backdrop-blur-sm bg-black/1 transition-all duration-500"></div>
       )}
 
-      {/* NavBar */}
       {showContent && (
         <div className="fixed top-0 left-0 right-0 z-50 animate-slide-in-left">
           <NavBar onDropdownChange={setIsDropdownVisible} />
         </div>
       )}
 
-      {/* Spacer */}
       <div className="h-[80px]" />
 
-      {/* Banner */}
       <Banner onComplete={handleBannerComplete} skipAnimation={showContent} />
 
-      {/* Categories */}
+
       {showContent && (
         <div className="flex items-center justify-center animate-slide-in-right">
-          <div className="w-full pb-4 mx-12 mt-4 grid grid-cols-4 gap-12">
+          <div className="w-full pb-4 mx-12 mt-4 grid sm:grid-cols-4 grid-cols-1  gap-12">
             <Categorie imgSrc="/laptop.svg" altText="Laptops" categoryName="Laptops" />
             <Categorie imgSrc="/vr.svg" altText="VR-Brille" categoryName="VR-Brille" />
             <Categorie imgSrc="/audio.svg" altText="Ton & Licht" categoryName="Ton & Licht" />

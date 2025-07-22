@@ -39,7 +39,6 @@ interface Reservation {
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
-// Utility: Format Date to local YYYY-MM-DD string (no timezone shift)
 function formatDateToLocalISO(date: Date) {
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -63,14 +62,12 @@ const [startDate, endDate] = dateRange;
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Add to cart saves local date strings without timezone shifts
   const addToCart = (device: Device, startDate?: Date | null, endDate?: Date | null) => {
   if (!startDate || !endDate) {
     setToastMessage("Bitte Start- und Enddatum auswählen");
     return;
   }
 
-  // Check for overlapping reservations
   const start = startDate.getTime();
   const end = endDate.getTime();
 

@@ -37,7 +37,7 @@ const LoginDropDown: React.FC<LoginDropDownProps> = ({ isLoginVisible, setIsLogi
   }, [isLoginVisible, setIsLoginVisible]);
 
   const handleLogin = async () => {
-    setErrorMessage(''); // 👈 clear old error
+    setErrorMessage('');
     try {
       const response = await fetch(`${API_BASE_URL}/login`, {
         method: 'POST',

@@ -44,41 +44,41 @@ const UsersManager: React.FC = () => {
   };
 
   const handleSave = async (user: User) => {
-  if (addingUser) {
-    try {
-      const res = await fetch(`${API_BASE_URL}/users/addUser`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
-      });
-      if (!res.ok) throw new Error("Failed to add user");
-      setUsers((prev) => [...prev, user]);
-    } catch (err) {
-      console.error(err);
-      alert("Failed to add user");
-    } finally {
-      setAddingUser(false);   // closes the modal here
-      setEditingUser(null);   // close modal after add too
-    }
-  } else {
-    try {
-      const res = await fetch(`${API_BASE_URL}/users/updateUser/${user.matrikelnumber}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
-      });
-      if (!res.ok) throw new Error("Failed to update user");
+    if (addingUser) {
+      try {
+        const res = await fetch(`${API_BASE_URL}/users/addUser`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(user),
+        });
+        if (!res.ok) throw new Error("Failed to add user");
+        setUsers((prev) => [...prev, user]);
+      } catch (err) {
+        console.error(err);
+        alert("Failed to add user");
+      } finally {
+        setAddingUser(false);   // closes the modal here
+        setEditingUser(null);   // close modal after add too
+      }
+    } else {
+      try {
+        const res = await fetch(`${API_BASE_URL}/users/updateUser/${user.matrikelnumber}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(user),
+        });
+        if (!res.ok) throw new Error("Failed to update user");
 
-      setUsers((prev) =>
-        prev.map((u) => (u.matrikelnumber === user.matrikelnumber ? user : u))
-      );
-      setEditingUser(null);  // closes the modal here
-    } catch (err) {
-      console.error(err);
-      alert("Failed to update user");
+        setUsers((prev) =>
+          prev.map((u) => (u.matrikelnumber === user.matrikelnumber ? user : u))
+        );
+        setEditingUser(null);  // closes the modal here
+      } catch (err) {
+        console.error(err);
+        alert("Failed to update user");
+      }
     }
-  }
-};
+  };
 
 
 
@@ -98,17 +98,16 @@ const UsersManager: React.FC = () => {
         }}
         className="px-4 py-2 rounded bg-black text-white mb-4 hover:cursor-pointer hover:bg-[black]/70"
       >
-        Add User
+        Benutzer hinzufügen
       </button>
 
       <table className="w-full text-black table-auto border-collapse border border-gray-300">
         <thead>
           <tr>
-            <th className="border border-gray-300 p-2">Matrikelnumber</th>
-            <th className="border border-gray-300 p-2">Firstname</th>
-            <th className="border border-gray-300 p-2">Secondname</th>
-            <th className="border border-gray-300 p-2">Email</th>
-            <th className="border border-gray-300 p-2">Actions</th>
+            <th className="border border-gray-300 p-2">Matrikelnummer</th>
+            <th className="border border-gray-300 p-2">Vorname</th>
+            <th className="border border-gray-300 p-2">Nachname</th>
+            <th className="border border-gray-300 p-2">E-mail</th>
           </tr>
         </thead>
         <tbody>
@@ -121,22 +120,22 @@ const UsersManager: React.FC = () => {
               <td className="border border-gray-300 p-2 text-center">{user.secondname}</td>
               <td className="border border-gray-300 p-2 text-center">{user.email}</td>
               <td className="border border-gray-300 p-2 space-x-2">
-                <div className="flex jusify-center items-center">
-                <button
-                  className="text-sm border p-2 rounded-[5px] border-gray-300 shadow-md hover:bg-gray-100 hover:cursor-pointer"
-                  onClick={() => {
-                    setEditingUser(user);
-                    setAddingUser(false);
-                  }}
-                >
-                  Bearbeiten
-                </button>
-                <button
-                  className="text-white text-sm  bg-[black] p-2 mx-1 rounded-[5px] hover:cursor-pointer hover:bg-[black]/80" 
-                  onClick={() => handleDelete(user.matrikelnumber)}
-                >
-                  Löschen
-                </button>
+                <div className="flex justify-center items-center">
+                  <button
+                    className="text-sm border p-2 rounded border-gray-300 shadow-md hover:bg-gray-100 hover:cursor-pointer"
+                    onClick={() => {
+                      setEditingUser(user);
+                      setAddingUser(false);
+                    }}
+                  >
+                    Bearbeiten
+                  </button>
+                  <button
+                    className="text-white text-sm bg-[black] p-2 mx-1 rounded hover:cursor-pointer hover:bg-[black]/80"
+                    onClick={() => handleDelete(user.matrikelnumber)}
+                  >
+                    Löschen
+                  </button>
                 </div>
               </td>
             </tr>

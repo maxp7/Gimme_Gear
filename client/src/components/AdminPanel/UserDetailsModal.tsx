@@ -54,10 +54,10 @@ useEffect(() => {
         onSubmit={handleSubmit}
         className="bg-white p-6 text-black rounded shadow-lg w-[90vw] max-w-md"
       >
-        <h3 className="text-lg font-semibold mb-4">Edit User</h3>
+        <h3 className="text-lg font-semibold mb-4">Besitzer bearbeiten</h3>
 
         <label className="flex flex-col mb-3">
-          Matrikelnumber
+          Matrikelnummer
           <input
             type="number"
             name="matrikelnumber"
@@ -69,7 +69,7 @@ useEffect(() => {
         </label>
 
         <label className="flex flex-col mb-3">
-          First Name
+          Vorname
           <input
             type="text"
             name="firstname"
@@ -81,7 +81,7 @@ useEffect(() => {
         </label>
 
         <label className="flex flex-col mb-3">
-          Second Name
+          Nachname
           <input
             type="text"
             name="secondname"
@@ -93,7 +93,7 @@ useEffect(() => {
         </label>
 
         <label className="flex flex-col mb-4">
-          Email
+          E-mail
           <input
             type="email"
             name="email"
@@ -110,13 +110,13 @@ useEffect(() => {
             className="px-4 py-2 rounded border border-gray-300 hover:bg-gray-100"
             onClick={onClose}
           >
-            Cancel
+            Abbrechen
           </button>
           <button
             type="submit"
             className="px-4 py-2 rounded bg-black text-white hover:bg-gray-900"
           >
-            Save
+            Speichern
           </button>
         </div>
       </form>

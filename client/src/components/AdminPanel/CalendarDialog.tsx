@@ -37,16 +37,13 @@ const CalendarDialog: React.FC<CalendarDialogProps> = ({
 
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center">
-      {/* Overlay */}
       <div
         className="fixed inset-0 bg-[gray]/70"
         onClick={() => onOpenChange(false)}
       />
-
-      {/* Modal Content */}
       <div className="relative z-5 max-h-[85vh] w-[50vw] max-w-[700px] overflow-auto rounded-lg bg-white p-4 text-black shadow-lg">
         <h2 className="text-xl font-semibold border-b border-gray-300 pb-2 mb-4 text-center">
-          Create Reservation
+          Buchung erstellen
         </h2>
 
         <form
@@ -74,7 +71,7 @@ const CalendarDialog: React.FC<CalendarDialogProps> = ({
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium">Start Date</label>
+            <label className="text-sm font-medium">Startdatum</label>
             <input
               type="date"
               value={formData.startdate}
@@ -86,7 +83,7 @@ const CalendarDialog: React.FC<CalendarDialogProps> = ({
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium">End Date</label>
+            <label className="text-sm font-medium">Enddatum</label>
             <input
               type="date"
               value={formData.enddate}
@@ -98,7 +95,7 @@ const CalendarDialog: React.FC<CalendarDialogProps> = ({
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium">Device ID</label>
+            <label className="text-sm font-medium">Gerät ID</label>
             <input
               value={formData.deviceid}
               onChange={(e) =>
@@ -109,7 +106,7 @@ const CalendarDialog: React.FC<CalendarDialogProps> = ({
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium">First Name</label>
+            <label className="text-sm font-medium">Vorname</label>
             <input
               value={formData.firstname}
               onChange={(e) =>
@@ -120,7 +117,7 @@ const CalendarDialog: React.FC<CalendarDialogProps> = ({
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium">Second Name</label>
+            <label className="text-sm font-medium">Nachname</label>
             <input
               value={formData.secondname}
               onChange={(e) =>
@@ -131,7 +128,7 @@ const CalendarDialog: React.FC<CalendarDialogProps> = ({
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium">Email</label>
+            <label className="text-sm font-medium">E-mail</label>
             <input
               type="email"
               value={formData.email}
@@ -147,14 +144,14 @@ const CalendarDialog: React.FC<CalendarDialogProps> = ({
               type="submit"
               className="py-2 px-4 bg-black text-white rounded hover:bg-gray-800 transition-colors font-medium"
             >
-              Save
+              Speichern
             </button>
             <button
               type="button"
               onClick={() => onOpenChange(false)}
               className="py-2 px-4 bg-gray-300 text-black rounded hover:bg-gray-400 transition-colors font-medium"
             >
-              Cancel
+              Abbrechen
             </button>
           </div>
         </form>

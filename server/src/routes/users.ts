@@ -18,7 +18,6 @@ router.post('/addUser', async (req, res) => {
   }
 });
 
-// 👇 NEW: Get all users
 router.get('/getUsers', async (_req, res) => {
   try {
     const result = await pool.query(

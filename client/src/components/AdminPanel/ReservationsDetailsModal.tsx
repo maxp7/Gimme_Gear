@@ -34,7 +34,6 @@ const ReservationDetailsModal: React.FC<ReservationDetailsModalProps> = ({
     setFormData(reservation);
   }, [reservation]);
 
-  // Close modal on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
@@ -86,10 +85,10 @@ useEffect(() => {
       className="bg-white rounded-lg shadow-lg p-6 w-[90vw] max-w-md max-h-[98vh] overflow-y-auto
                  flex flex-col gap-4"
     >
-        <h2 className="text-2xl font-semibold text-black mb-2">Edit Reservation</h2>
+        <h2 className="text-2xl font-semibold text-black mb-2">Reservierung bearbeiten</h2>
 
         <label className="flex flex-col text-sm text-gray-700">
-          Reservation Number
+          Reservierungsnummer
           <input
             className="border rounded px-2 py-1 mt-1"
             type="text"
@@ -107,14 +106,14 @@ useEffect(() => {
             value={formData.status}
             onChange={handleChange}
           >
-            <option value="Reserved">Reserved</option>
-            <option value="Cancelled">Cancelled</option>
-            <option value="Completed">Completed</option>
+            <option value="Reserviert">Reserviert</option>
+            <option value="Bestätigt">Bestätigt</option>
+            <option value="Verliehen">Verliehen</option>
           </select>
         </label>
 
         <label className="flex flex-col text-sm text-gray-700">
-          Device ID
+          Gerät ID
           <input
             className="border rounded px-2 py-1 mt-1"
             type="text"
@@ -126,7 +125,7 @@ useEffect(() => {
         </label>
 
         <label className="flex flex-col text-sm text-gray-700">
-          Device Name
+          Gerätname
           <input
             className="border rounded px-2 py-1 mt-1"
             type="text"
@@ -139,7 +138,7 @@ useEffect(() => {
 
         <div className="grid grid-cols-2 gap-4">
           <label className="flex flex-col text-sm text-gray-700">
-            Start Date
+            Startdatum
             <input
               className="border rounded px-2 py-1 mt-1"
               type="date"
@@ -151,7 +150,7 @@ useEffect(() => {
           </label>
 
           <label className="flex flex-col text-sm text-gray-700">
-            End Date
+            Enddatum
             <input
               className="border rounded px-2 py-1 mt-1"
               type="date"
@@ -164,7 +163,7 @@ useEffect(() => {
         </div>
 
         <label className="flex flex-col text-sm text-gray-700">
-          First Name
+          Vorname
           <input
             className="border rounded px-2 py-1 mt-1"
             type="text"
@@ -176,7 +175,7 @@ useEffect(() => {
         </label>
 
         <label className="flex flex-col text-sm text-gray-700">
-          Last Name
+          Nachname
           <input
             className="border rounded px-2 py-1 mt-1"
             type="text"
@@ -188,7 +187,7 @@ useEffect(() => {
         </label>
 
         <label className="flex flex-col text-sm text-gray-700">
-          Email
+          E-mail
           <input
             className="border rounded px-2 py-1 mt-1"
             type="email"
@@ -200,7 +199,7 @@ useEffect(() => {
         </label>
 
         <label className="flex flex-col text-sm text-gray-700">
-          Matrikel Number
+          Matrikelnummer
           <input
             className="border rounded px-2 py-1 mt-1"
             type="number"
@@ -217,7 +216,7 @@ useEffect(() => {
             className="px-4 py-2 rounded border border-gray-300 hover:bg-gray-100 transition"
             onClick={onClose}
           >
-            Cancel
+            Abbrechen
           </button>
 
           <button
@@ -225,14 +224,14 @@ useEffect(() => {
             className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 transition"
             onClick={handleDelete}
           >
-            Delete
+            Löschen
           </button>
 
           <button
             type="submit"
             className="px-4 py-2 rounded bg-black text-white hover:bg-gray-900 transition"
           >
-            Save
+            Speichern
           </button>
         </div>
       </form>

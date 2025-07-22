@@ -17,11 +17,9 @@ export default function NavBar({ onDropdownChange }: NavBarProps) {
   const [isCartDropdownVisible, setIsCartDropdownVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-
-  // Always use this helper to change dropdown
   const handleDropdown = (visible: boolean) => {
     setIsDropdownVisible(visible);
-    onDropdownChange?.(visible); // inform parent
+    onDropdownChange?.(visible); 
   };
   
   const hideDropdown = () => handleDropdown(false);
@@ -33,7 +31,7 @@ export default function NavBar({ onDropdownChange }: NavBarProps) {
   }, [toastMessage]);
   return (
     <div
-      className="relative h-[6rem]"
+      className="relative h-[8rem]"
       onMouseLeave={hideDropdown}
     >
       <div className="flex m-4 gap-8">

@@ -104,18 +104,18 @@ const DeviceManager: React.FC = () => {
         }}
         className="px-4 py-2 rounded bg-black text-white mb-4 hover:cursor-pointer hover:bg-[black]/70"
       >
-        Add Device
+        Gerät hinzufügen
       </button>
 
       <table className="w-full text-black table-auto border-collapse border border-gray-300">
         <thead>
           <tr>
-            <th className="border border-gray-300 p-2">Device ID</th>
-            <th className="border border-gray-300 p-2">Name</th>
-            <th className="border border-gray-300 p-2">Owner</th>
-            <th className="border border-gray-300 p-2">Location</th>
+            <th className="border border-gray-300 p-2">Gerät ID</th>
+            <th className="border border-gray-300 p-2">Gerätname</th>
+            <th className="border border-gray-300 p-2">Besitzer</th>
+            <th className="border border-gray-300 p-2">Ort</th>
             <th className="border border-gray-300 p-2">Status</th>
-            <th className="border border-gray-300 p-2">Actions</th>
+            <th className="border border-gray-300 p-2"></th>
           </tr>
         </thead>
         <tbody>

@@ -12,8 +12,8 @@ const Banner: React.FC<BannerProps> = ({ onComplete, skipAnimation = false }) =>
   useEffect(() => {
     if (!skipAnimation && showSecond) {
       const timer = setTimeout(() => {
-        onComplete(); // signal parent after second animation finishes
-      }, 1000); // matches the second animation duration
+        onComplete(); 
+      }, 1000); 
       return () => clearTimeout(timer);
     }
   }, [showSecond, onComplete, skipAnimation]);

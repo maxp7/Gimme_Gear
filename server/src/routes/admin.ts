@@ -1,7 +1,7 @@
 
 import { Router } from 'express';
 import pool from '../db';
-import { verifyAdminToken } from './auth'; // Assuming you have this middleware
+import { verifyAdminToken } from './auth';
 
 const router = Router();
 

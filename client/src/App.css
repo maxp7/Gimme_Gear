@@ -2,14 +2,12 @@ body {
   height: 100svh;
   background-color: white;
 }
-/* Title color */
 .fc-toolbar-title {
   color: black; /* blue-700 */
   font-weight: 400;
   font-size: 1.5rem;
 }
 
-/* Buttons styles */
 .fc .fc-button {
   background-color: transparent; /* blue-600 */
   color: black;

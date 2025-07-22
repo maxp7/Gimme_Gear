@@ -48,9 +48,6 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     [name]: name === 'deviceid' ? String(value) : value,
   }));
 };
-
-
-  // Submit form
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     fetch(`${API_BASE_URL}/dbui`, {
@@ -68,7 +65,6 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     console.error('Failed to add device:', data.error);
   }
   
-  // Clear form anyway if you want
   setFormData({
     deviceid: '',
     devicename: '',
@@ -94,7 +90,6 @@ if (!res.ok) {
   return;
 }   
 
-    // Remove device from state
     setDevices(prev => prev.filter(d => d.deviceid !== deviceid));
   } catch (err) {
     console.error('Delete error:', err);

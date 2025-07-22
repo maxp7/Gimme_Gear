@@ -47,20 +47,19 @@ export default function ReservationForm({ cart, onSubmitSuccess, onCancel }: Res
     const { name, value } = e.target;
 
     if (name === "matrikelnumber") {
-      // allow only digits
       if (!/^\d*$/.test(value)) return;
       if (value.length > 7) return;
     }
 
     setFormData(prev => ({ ...prev, [name]: value }));
-    setError(""); // clear error on change
+    setError(""); 
 
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handlePrivacyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPrivacyAccepted(e.target.checked);
-    setError(""); // clear error if they check it
+    setError(""); 
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

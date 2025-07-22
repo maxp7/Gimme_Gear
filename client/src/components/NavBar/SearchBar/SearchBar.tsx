@@ -1,3 +1,5 @@
+import { CiSearch } from "react-icons/ci";
+
 type Device = {
   deviceid: string;
   devicename: string;
@@ -34,14 +36,18 @@ export default function SearchBar({ input, setInput, setResults }: SearchBarProp
   };
 
   return (
-    <div className="bg-[white] w-full rounded-[20px] h-[3rem] px-[15px] flex">
+    <div className="bg-[white] w-full rounded-[20px] h-[3rem] px-[15px] flex justify items-center">
+      <div className="flex flex-row">
+        <CiSearch className="text-black text-2xl mr-1"/>
       <input
+      
         type="text"
         placeholder="Wonach suchst du?"
         className="bg-transparent h-full w-full border-none text-[1.25rem] text-[black] outline-none"
         value={input}
         onChange={(e) => handleChange(e.target.value)}
       />
+      </div>
     </div>
   );
 }

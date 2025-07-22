@@ -129,8 +129,6 @@ const handleDelete = async (reservationnumber: number) => {
       alert(`Failed to delete reservation: ${err.error || response.statusText}`);
       return;
     }
-
-    // Update state after successful deletion
     setReservations((prev) =>
       prev.filter((r) => r.reservationnumber !== reservationnumber)
     );

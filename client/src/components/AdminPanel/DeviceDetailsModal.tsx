@@ -61,10 +61,10 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({
         onSubmit={handleSubmit}
         className="bg-white p-6 text-black rounded shadow-lg w-[90vw] max-w-md overflow-auto max-h-[90vh]"
       >
-        <h3 className="text-lg font-semibold mb-4">Edit Device</h3>
+        <h3 className="text-lg font-semibold mb-4">Gerät bearbeiten</h3>
 
         <label className="flex flex-col mb-3">
-          Device ID
+          Gerät ID
           <input
             type="text"
             name="deviceid"
@@ -76,7 +76,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({
         </label>
 
         <label className="flex flex-col mb-3">
-          Device Name
+          Gerätname
           <input
             type="text"
             name="devicename"
@@ -88,7 +88,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({
         </label>
 
         <label className="flex flex-col mb-3">
-          Description
+          Bescheibung
           <textarea
             name="devicedescription"
             value={formData.devicedescription || ""}
@@ -110,7 +110,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({
         </label>
 
         <label className="flex flex-col mb-3">
-          Comments
+          Commentare
           <textarea
             name="comments"
             value={formData.comments || ""}
@@ -121,7 +121,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({
         </label>
 
         <label className="flex flex-col mb-3">
-          Owner
+          Besitzer
           <input
             type="text"
             name="owner"
@@ -133,7 +133,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({
         </label>
 
         <label className="flex flex-col mb-3">
-          Location
+          Ort
           <input
             type="text"
             name="location"
@@ -145,7 +145,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({
         </label>
 
         <label className="flex flex-col mb-4">
-          Full Description
+          Technische Information
           <textarea
             name="full_description"
             value={formData.full_description || ""}
@@ -161,13 +161,13 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({
             className="px-4 py-2 rounded border border-gray-300 hover:bg-gray-100"
             onClick={onClose}
           >
-            Cancel
+            Abbrechen
           </button>
           <button
             type="submit"
             className="px-4 py-2 rounded bg-black text-white hover:bg-gray-900"
           >
-            Save
+            Speichern
           </button>
         </div>
       </form>

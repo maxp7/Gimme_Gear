@@ -7,7 +7,6 @@ import loginRoute from './login';
 import adminRoutes from './admin';
 import productReservationsRoutes from './productReservations';
 import { verifyAdminToken } from './auth';
-import alterTableRoutes from './alterTable';
 const router = Router();
 
 router.use('/login', loginRoute);
@@ -17,7 +16,6 @@ router.use('/devices', devicesRoutes);
 router.use('/admin/reservations', adminRoutes);
 router.use('/reservations', reservationsRoutes);
 router.use('/product-reservations', productReservationsRoutes);
-router.use('/alter-table', alterTableRoutes);
 router.use('/', categoryRoutes);
 
 export default router;
