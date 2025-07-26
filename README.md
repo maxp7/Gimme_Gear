@@ -57,7 +57,7 @@ Bitte achten Sie darauf, dass die `.env`-Dateien korrekt benannt und in den rich
 Bei Problemen wenden Sie sich gern an das Entwicklerteam oder konsultieren die Projektunterlagen im Moodle-Kurs.
 
 ---
-##Admin Panel 
+## Admin Panel 
 
 Login: Admin 
 Passwort: 666
