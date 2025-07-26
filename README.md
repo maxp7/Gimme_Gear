@@ -55,3 +55,11 @@ Bevor Sie starten, stellen Sie bitte sicher, dass folgende Tools installiert sin
 
 Bitte achten Sie darauf, dass die `.env`-Dateien korrekt benannt und in den richtigen Verzeichnissen abgelegt sind, da sie für den Start der Anwendung erforderlich sind.  
 Bei Problemen wenden Sie sich gern an das Entwicklerteam oder konsultieren die Projektunterlagen im Moodle-Kurs.
+
+---
+##Admin Panel 
+
+Login: Admin 
+Passwort: 666
+
+---
