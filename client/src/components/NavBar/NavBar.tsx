@@ -31,7 +31,7 @@ export default function NavBar({ onDropdownChange }: NavBarProps) {
   }, [toastMessage]);
   return (
     <div
-      className="relative h-[8rem]"
+      className="relative h-[5rem] md:h-[8rem]"
       onMouseLeave={hideDropdown}
     >
       <div className="flex m-4 gap-8">

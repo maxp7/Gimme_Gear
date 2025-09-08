@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import NavBar from "./NavBar/NavBar";
 import CalenderFilter from "./CalenderFilter";
 
@@ -51,10 +51,10 @@ export default function ProductPage() {
   const location = useLocation();
   const { result } = location.state as { result: Device };
   const imageName = result.devicename.toLowerCase().replace(/\s+/g, "-");
-
+  const calendarRef = useRef<HTMLDivElement | null>(null);
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
 const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
 const [startDate, endDate] = dateRange;
@@ -128,41 +128,54 @@ useEffect(() => {
   return (
     <div className="overflow-y">
       <NavBar onDropdownChange={setIsDropdownVisible} />
-      <div className="mt-6 ml-6">
+      <div ref={calendarRef} className="mt-6 ml-6">
               <CalenderFilter
+            
             dateRange={dateRange}
             onDateRangeChange={setDateRange}
+            isOpen={isCalendarOpen}
+            onOpenChange={setIsCalendarOpen}
             
       /></div>
       <div className="mt-6 ml-6"></div>
       <div className="font-bold">
-        <div className="w-[100vw] flex">
-          <div className="w-[47%] m-4">
-            <div className="text-black mb-4">
+        <div className="w-[100vw] sm:flex">
+          <div className="md:w-[47%] m-2 md:m-4">
+            <img className=" md:hidden w-[80%] rounded-[20px]" src={`/images/devices/${imageName}.svg`} />
+            <div className="text-black md:mb-4">
               <br />
-              <div className="text-2xl m-4">{result.devicename}</div>
+              <div className="text-2xl mx-4 md:m-4">{result.devicename}</div>
               <br />
-              <div className="m-4 max-w-[50ch]">
+              <div className="m-4 md:m-4 md:max-w-[50ch]">
                 {result.full_description}
               </div>
+              
               <div className="m-4">Besitzer: {result.owner}</div>
               <div className="m-4">Ort: {result.location}</div>
             </div>
 
             <button
-  disabled={!startDate || !endDate}
-  onClick={() => addToCart(result, startDate, endDate)}
-  className="ml-4 px-4 py-2 bg-black text-white rounded disabled:opacity-50 hover:cursor-pointer hover:opacity-85"
+            
+  onClick={() => {
+    if (!startDate || !endDate) {
+      calendarRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      setIsCalendarOpen(true); // открыть календарь
+    } else {
+      addToCart(result, startDate, endDate);
+    }
+  }}
+  
+  className="ml-4 mb-8 px-4 py-2 bg-black text-white rounded disabled:opacity-50 hover:cursor-pointer hover:opacity-85"
 >
   {startDate && endDate ? "Zum Warenkorb hinzufügen" : "Datum auswählen"}
 </button>
 
           </div>
 
-          <img className="w-[40%] m-8 rounded-[20px]" src={`/images/devices/${imageName}.svg`} />
+          <img className="hidden md:block w-[40%] m-8 rounded-[20px]" src={`/images/devices/${imageName}.svg`} />
 
           {isDropdownVisible && (
-            <div className="fixed top-[8.5rem] inset-0 z-40 backdrop-blur-sm bg-black/10 transition-all duration-500"></div>
+            <div className="fixed top-[6.5rem] md:top-[8.5rem]  inset-0 z-40 backdrop-blur-sm bg-black/10 transition-all duration-500"></div>
           )}
         </div>
       </div>

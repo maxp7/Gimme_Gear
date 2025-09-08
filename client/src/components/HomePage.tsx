@@ -53,7 +53,7 @@ export default function HomePage() {
       </style>
 
       {isDropdownVisible&& (
-        <div className="fixed top-[8.5rem] inset-0 z-40 backdrop-blur-sm bg-black/1 transition-all duration-500"></div>
+        <div className="fixed top-[6.5rem] md:top-[8.5rem] inset-0 z-40 backdrop-blur-sm bg-black/1 transition-all duration-500"></div>
       )}
 
       {showContent && (
@@ -74,6 +74,7 @@ export default function HomePage() {
             <Categorie imgSrc="/vr.svg" altText="VR-Brille" categoryName="VR-Brille" />
             <Categorie imgSrc="/audio.svg" altText="Ton & Licht" categoryName="Ton & Licht" />
             <Categorie imgSrc="/equipment.svg" altText="Zubehör" categoryName="Zubehör" />
+            
           </div>
         </div>
         

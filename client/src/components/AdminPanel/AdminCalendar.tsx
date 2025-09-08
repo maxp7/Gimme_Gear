@@ -87,7 +87,7 @@ const AdminCalendar: React.FC<AdminCalendarProps> = ({ events, onEventClick }) =
   
 
   return (
-    <div className="w-[95vw] p-4">
+    <div className="w-[100vw] md:w-[95vw] md:p-4">
       <FullCalendar
         height={700}
         ref={calendarRef}

@@ -69,7 +69,7 @@ const LoginDropDown: React.FC<LoginDropDownProps> = ({ isLoginVisible, setIsLogi
         ${isLoginVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'}
       `}
     >
-      <div className='w-[40vw] m-auto'>
+      <div className='w-[100vw] md:w-[40vw] m-auto'>
         <div className='flex flex-col justify-center items-center'>
           <h3 className="text-lg font-semibold mb-2">Anmelden</h3>
 

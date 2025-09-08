@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import NavBar from "./NavBar/NavBar";
 import CalenderFilter from "./CalenderFilter";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from "react";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
@@ -31,11 +31,12 @@ export default function CategoryPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const validCategories = ['Laptops', 'VR-Brille', 'Zubehör', 'Ton & Licht'];
-const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
-const [startDate, endDate] = dateRange;
-const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
+  const [startDate, endDate] = dateRange;
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const navigate = useNavigate();
-
+  const calendarRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (!name) return;
     if (!name || !validCategories.includes(name)) {
@@ -75,7 +76,8 @@ const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const addToCart = (device: Device, startDate?: Date | null, endDate?: Date | null) => {
     if (!startDate || !endDate) {
-      alert("Please select start and end dates.");
+      setIsCalendarOpen(true);
+      calendarRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
 
@@ -110,13 +112,16 @@ const getImageUrl = (devicename: string) => {
   return (
     <div className="text-black">
       <NavBar onDropdownChange={setIsDropdownVisible}/>
-      <div className="mt-6 ml-6"><CalenderFilter
+      <div ref={calendarRef} className="mt-2 md:mt-6 ml-6">
+        <CalenderFilter
       dateRange={dateRange}
       onDateRangeChange={setDateRange}
+      isOpen={isCalendarOpen}
+      onOpenChange={setIsCalendarOpen}
       
 /></div>
       {isDropdownVisible && (
-        <div className="fixed top-[8.5rem] inset-0 z-40 backdrop-blur-sm bg-black/1 transition-all duration-500"></div>
+        <div className="fixed top-[6.5rem] md:top-[8.5rem]  inset-0 z-40 backdrop-blur-sm bg-black/1 transition-all duration-500"></div>
       )}
 
 <div className="p-4">
@@ -131,7 +136,7 @@ const getImageUrl = (devicename: string) => {
       <div
         key={device.deviceid}
         onClick={() => handleClick(device)}
-        className="cursor-pointer p-4 flex justify-between items-center m-4 hover:scale-105 transition-transform"
+        className="cursor-pointer md:p-4 flex md:justify-between items-center m-4 hover:scale-105 transition-transform"
       >
         <div className="flex items-center gap-4">
           <img 
@@ -143,26 +148,25 @@ const getImageUrl = (devicename: string) => {
             }}
           />
           <div>
-            <div className="font-semibold">{device.devicename}</div>
+            <div className="font-semibold w-[140px] ">{device.devicename}</div>
             {device.devicedescription && (
-              <div className="text-sm text-gray-600">{device.devicedescription}</div>
+              <div className="text-sm text-gray-600 w-[140px]">{device.devicedescription}</div>
             )}
-            <div>Besitzer: {device.owner}</div>
+            <div className="w-[140px]">Besitzer: {device.owner}</div>
           </div>
         </div>
 <button
-  disabled={!startDate || !endDate}
   onClick={(event) => {
     event.stopPropagation();
     addToCart(device, startDate, endDate);
   }}
-  className={`ml-4 px-2 py-1 rounded text-black transition ${
+  className={`mx-6 w-[50px] px-2 py-1 rounded text-black transition ${
     startDate && endDate
       ? "cursor-pointer font-bold hover:underline"
-      : "cursor-not-allowed opacity-50"
+      : "cursor-pointer "
   }`}
 >
-  {startDate && endDate ? "Add to cart" : "Datum auswählen"}
+  {startDate && endDate ? "Hinzufügen" : "Datum auswählen"}
 </button>
 
       </div>

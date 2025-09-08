@@ -57,30 +57,33 @@ const UsersManager: React.FC = () => {
         console.error(err);
         alert("Failed to add user");
       } finally {
-        setAddingUser(false);   // closes the modal here
-        setEditingUser(null);   // close modal after add too
+        setAddingUser(false);
+        setEditingUser(null);
       }
     } else {
       try {
-        const res = await fetch(`${API_BASE_URL}/users/updateUser/${user.matrikelnumber}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(user),
-        });
+        const res = await fetch(
+          `${API_BASE_URL}/users/updateUser/${user.matrikelnumber}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(user),
+          }
+        );
         if (!res.ok) throw new Error("Failed to update user");
 
         setUsers((prev) =>
-          prev.map((u) => (u.matrikelnumber === user.matrikelnumber ? user : u))
+          prev.map((u) =>
+            u.matrikelnumber === user.matrikelnumber ? user : u
+          )
         );
-        setEditingUser(null);  // closes the modal here
+        setEditingUser(null);
       } catch (err) {
         console.error(err);
         alert("Failed to update user");
       }
     }
   };
-
-
 
   return (
     <div>
@@ -96,52 +99,69 @@ const UsersManager: React.FC = () => {
             email: "",
           });
         }}
-        className="px-4 py-2 rounded bg-black text-white mb-4 hover:cursor-pointer hover:bg-[black]/70"
+        className="px-4 py-2 rounded bg-black text-white mb-4 hover:cursor-pointer hover:bg-black/70"
       >
         Benutzer hinzufügen
       </button>
 
-      <table className="w-full text-black table-auto border-collapse border border-gray-300">
-        <thead>
-          <tr>
-            <th className="border border-gray-300 p-2">Matrikelnummer</th>
-            <th className="border border-gray-300 p-2">Vorname</th>
-            <th className="border border-gray-300 p-2">Nachname</th>
-            <th className="border border-gray-300 p-2">E-mail</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.matrikelnumber} className="hover:bg-gray-100 text-center">
-              <td className="border border-gray-300 p-2 text-center">
-                {user.matrikelnumber}
-              </td>
-              <td className="border border-gray-300 p-2 text-center">{user.firstname}</td>
-              <td className="border border-gray-300 p-2 text-center">{user.secondname}</td>
-              <td className="border border-gray-300 p-2 text-center">{user.email}</td>
-              <td className="border border-gray-300 p-2 space-x-2">
-                <div className="flex justify-center items-center">
-                  <button
-                    className="text-sm border p-2 rounded border-gray-300 shadow-md hover:bg-gray-100 hover:cursor-pointer"
-                    onClick={() => {
-                      setEditingUser(user);
-                      setAddingUser(false);
-                    }}
-                  >
-                    Bearbeiten
-                  </button>
-                  <button
-                    className="text-white text-sm bg-[black] p-2 mx-1 rounded hover:cursor-pointer hover:bg-[black]/80"
-                    onClick={() => handleDelete(user.matrikelnumber)}
-                  >
-                    Löschen
-                  </button>
-                </div>
-              </td>
+      {/* Обёртка для горизонтального скролла */}
+      <div className="overflow-x-auto">
+        <table className="w-full text-black table-auto border-collapse border border-gray-300">
+          <thead className="hidden md:table-header-group">
+            <tr>
+              <th className="border border-gray-300 p-2">Matrikelnummer</th>
+              <th className="border border-gray-300 p-2">Vorname</th>
+              <th className="border border-gray-300 p-2">Nachname</th>
+              <th className="border border-gray-300 p-2">E-mail</th>
+              <th className="border border-gray-300 p-2">Aktionen</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="block md:table-row-group">
+            {users.map((user) => (
+              <tr
+                key={user.matrikelnumber}
+                className="block md:table-row border border-gray-300 mb-4 md:mb-0 p-2 md:p-0 rounded md:rounded-none bg-white shadow md:shadow-none"
+              >
+                <td className="block md:table-cell md:border border-gray-300 p-2">
+                  <span className="font-semibold md:hidden">Matrikelnummer: </span>
+                  {user.matrikelnumber}
+                </td>
+                <td className="block md:table-cell md:border border-gray-300 p-2">
+                  <span className="font-semibold md:hidden">Vorname: </span>
+                  {user.firstname}
+                </td>
+                <td className="block md:table-cell md:border border-gray-300 p-2">
+                  <span className="font-semibold md:hidden">Nachname: </span>
+                  {user.secondname}
+                </td>
+                <td className="block md:table-cell md:border border-gray-300 p-2">
+                  <span className="font-semibold md:hidden">E-mail: </span>
+                  {user.email}
+                </td>
+                <td className="block md:table-cell md:border border-gray-300 p-2">
+                  <div className="flex gap-2 justify-start md:justify-center">
+                    <button
+                      className="text-sm border p-2 rounded hover:bg-gray-100"
+                      onClick={() => {
+                        setEditingUser(user);
+                        setAddingUser(false);
+                      }}
+                    >
+                      Bearbeiten
+                    </button>
+                    <button
+                      className="text-white text-sm bg-black p-2 rounded hover:bg-black/80"
+                      onClick={() => handleDelete(user.matrikelnumber)}
+                    >
+                      Löschen
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {editingUser && (
         <UserDetailsModal
